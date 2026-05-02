@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot name="open_manipulator_x_tb4" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="use_sim" default="true" />
+  <xacro:arg name="use_fake_hardware" default="false" />
+  <xacro:arg name="fake_sensor_commands" default="false" />
+
+  <xacro:include filename="$(find tb4_openx_description)/urdf/turtlebot4.urdf.xacro" />
+  <xacro:include filename="$(find tb4_openx_description)/urdf/realsense.urdf.xacro" />
+  
+  <xacro:include filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" />
+  <xacro:include filename="$(find open_manipulator_x_description)/gazebo/open_manipulator_x.gazebo.xacro" />
+  
+  <xacro:include filename="$(find tb4_openx_description)/ros2_control/open_manipulator_x_system.ros2_control.xacro" />
+
+  <xacro:open_manipulator_x prefix="$(arg prefix)" />
+  <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
+  <xacro:open_manipulator_x_system
+    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+    use_fake_hardware="$(arg use_fake_hardware)"
+    fake_sensor_commands="$(arg fake_sensor_commands)"/>
+
+  <gazebo>
+    <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find tb4_openx_description)/config/controllers.yaml</parameters>
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+    </plugin>
+  </gazebo>
+
+  <xacro:arm name="arm" parent_link="$(arg prefix)link5" model="pro">
+    <origin xyz="0.070 0.0 0.052" rpy="0 0 0"/>
+  </xacro:arm>
+
+  <joint name="$(arg prefix)world_fixed" type="fixed">
+    <origin xyz="0.065 0 0" rpy="0 0 0"/>
+    <parent link="tower_sensor_plate"/>
+    <child link="$(arg prefix)link1"/>
+  </joint>
+
+  <gazebo reference="$(arg prefix)world_fixed">
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+</robot>
