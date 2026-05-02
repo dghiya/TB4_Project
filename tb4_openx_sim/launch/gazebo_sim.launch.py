@@ -1,41 +1,40 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration
+from launch.substitutions import Command
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    # 1. Define package paths
     pkg_description = get_package_share_directory('tb4_openx_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    
+    # We need the official TB4 package to grab the physical warehouse 3D model
+    pkg_tb4_ign = get_package_share_directory('turtlebot4_ignition_bringup')
 
-    # Path to the XACRO file we cleaned up earlier
     xacro_file = os.path.join(pkg_description, 'urdf', 't4_manipulator.urdf.xacro')
 
-    # 2. Setup Robot State Publisher (Processes Xacro -> URDF)
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='both',
         parameters=[{
-            'robot_description': Command(['xacro ', xacro_file, ' use_sim:=true']),
+            'robot_description': Command(['xacro ', xacro_file, ' use_sim:=true gazebo:=ignition']),
             'use_sim_time': True
         }]
     )
 
-    # 3. Start Ignition Gazebo with a Warehouse/Depot World
-    # 'depot.sdf' is a standard Ignition warehouse world.
+    # UPDATED: Load the physical warehouse to match the Nav2 map!
+    warehouse_world = os.path.join(pkg_tb4_ign, 'worlds', 'warehouse.sdf')
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
         ),
-        launch_arguments={'gz_args': '-r -v 4 depot.sdf'}.items(),
+        launch_arguments={'gz_args': f"-r -v 4 {warehouse_world}"}.items(),
     )
 
-    # 4. Spawn the robot into Ignition
     spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
@@ -44,11 +43,55 @@ def generate_launch_description():
             '-topic', 'robot_description',
             '-name', 'tb4_openx',
             '-allow_renaming', 'true',
-            '-z', '0.1' # Drop it slightly above the ground
+            '-z', '0.1' 
         ]
     )
 
-    # 5. Spawners for the Controllers defined in your YAML
+    # Syncs Ignition's time to ROS 2
+    clock_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='clock_bridge',
+        output='screen',
+        arguments=[
+            '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock'
+        ]
+    )
+
+    # NEW: The Lidar Bridge! 
+    # This takes the simulated laser scans and pipes them into the /scan topic for AMCL.
+    lidar_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='lidar_bridge',
+        output='screen',
+        arguments=[
+            '/world/warehouse/model/tb4_openx/link/rplidar_link/sensor/rplidar/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan'
+        ],
+        remappings=[
+            ('/world/warehouse/model/tb4_openx/link/rplidar_link/sensor/rplidar/scan', '/scan')
+        ]
+    )
+    
+    rplidar_stf = Node(
+        name='rplidar_stf',
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        arguments=[
+            '0', '0', '0', '0', '0', '0',
+            'rplidar_link', 'tb4_openx/rplidar_link/rplidar'
+        ]
+    )
+    
+    footprint_stf = Node(
+        name='footprint_stf',
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link']
+    )
+
     load_joint_state_broadcaster = Node(
         package="controller_manager", executable="spawner",
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
@@ -69,8 +112,11 @@ def generate_launch_description():
         arguments=["gripper_controller", "--controller-manager", "/controller_manager"],
     )
 
-    # 6. Build the Launch Description
     return LaunchDescription([
+        clock_bridge,  
+        lidar_bridge, # Added Lidar here
+        rplidar_stf,
+        footprint_stf,
         gazebo,
         robot_state_publisher,
         spawn_entity,

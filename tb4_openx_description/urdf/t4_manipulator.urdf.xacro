@@ -26,6 +26,12 @@
       <parameters>$(find tb4_openx_description)/config/controllers.yaml</parameters>
       <robot_param>robot_description</robot_param>
       <robot_param_node>robot_state_publisher</robot_param_node>
+
+      <ros>
+        <remapping>/diffdrive_controller/cmd_vel_unstamped:=/cmd_vel</remapping>
+        <remapping>/diffdrive_controller/odom:=/odom</remapping>
+      </ros>
+
     </plugin>
   </gazebo>
 
