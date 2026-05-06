@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!--
+  ArUco tag model for Ignition/Gazebo simulation.
+  Ported from fazhara1/08/ur5e_pbvs/models/artag so this repo owns its own
+  copy and can be spawned at runtime without depending on external packages.
+  Mesh + texture: meshes/artag.dae references meshes/marker01.png
+  (the visible ArUco tag texture).
+-->
+<robot name="artag" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="artag">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find tb4_openx_description)/models/artag/meshes/artag.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find tb4_openx_description)/models/artag/meshes/artag.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0"
+               iyy="1e-4" iyz="0.0"
+               izz="1e-4"/>
+    </inertial>
+  </link>
+    <gazebo>
+    <static>true</static>
+  </gazebo>
+
+</robot>

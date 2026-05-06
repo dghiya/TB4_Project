@@ -5,6 +5,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     pkg_description = get_package_share_directory('tb4_openx_description')
@@ -14,6 +15,7 @@ def generate_launch_description():
     pkg_tb4_ign = get_package_share_directory('turtlebot4_ignition_bringup')
 
     xacro_file = os.path.join(pkg_description, 'urdf', 't4_manipulator.urdf.xacro')
+    artag_xacro_file = os.path.join(pkg_description, 'models', 'artag', 'artag.urdf.xacro')
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -23,6 +25,16 @@ def generate_launch_description():
         parameters=[{
             'robot_description': Command(['xacro ', xacro_file, ' use_sim:=true gazebo:=ignition']),
             'use_sim_time': True
+        }]
+    )
+    
+    artag_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='artag_state_publisher',
+        namespace='trash_block',
+        parameters=[{
+            'robot_description': ParameterValue(Command(['xacro ', artag_xacro_file]), value_type=str)
         }]
     )
 
@@ -58,7 +70,6 @@ def generate_launch_description():
         ]
     )
 
-    # NEW: The Lidar Bridge! 
     # This takes the simulated laser scans and pipes them into the /scan topic for AMCL.
     lidar_bridge = Node(
         package='ros_gz_bridge',
@@ -70,6 +81,21 @@ def generate_launch_description():
         ],
         remappings=[
             ('/world/warehouse/model/tb4_openx/link/rplidar_link/sensor/rplidar/scan', '/scan')
+        ]
+    )
+    
+    camera_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='camera_bridge',
+        output='screen',
+        arguments=[
+            '/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
+            '/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo'
+        ],
+        remappings=[
+            ('/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image', '/oakd/rgb/preview/image_raw'),
+            ('/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info', '/oakd/rgb/preview/camera_info')
         ]
     )
     
@@ -90,6 +116,19 @@ def generate_launch_description():
         executable='static_transform_publisher',
         output='screen',
         arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link']
+    )
+    
+    spawn_artag = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-topic', '/trash_block/robot_description',
+            '-name', 'trash_block',
+            '-x', '2.25',
+            '-y', '1.0',
+            '-z', '0.1'
+        ],
+        output='screen'
     )
 
     load_joint_state_broadcaster = Node(
@@ -114,12 +153,15 @@ def generate_launch_description():
 
     return LaunchDescription([
         clock_bridge,  
-        lidar_bridge, # Added Lidar here
+        lidar_bridge, 
+        camera_bridge,          
         rplidar_stf,
         footprint_stf,
         gazebo,
         robot_state_publisher,
+        artag_state_publisher, 
         spawn_entity,
+        spawn_artag,           
         load_joint_state_broadcaster,
         load_diffdrive_controller,
         load_arm_controller,

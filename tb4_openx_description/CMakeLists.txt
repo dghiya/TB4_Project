@@ -13,6 +13,7 @@ install(DIRECTORY
   urdf
   config
   ros2_control
+  models
   DESTINATION share/${PROJECT_NAME}
 )
 

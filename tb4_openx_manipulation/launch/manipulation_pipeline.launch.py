@@ -14,6 +14,17 @@ def generate_launch_description():
     parameters=[moveit_config, {'use_sim_time': True}]
   )
   
+  aruco_params = os.path.join(
+    get_package_share_directory('tb4_openx_manipulation'),
+    'config', 'aruco_parameters.yaml'
+  )
+
+  aruco_node = Node(
+      package='ros2_aruco',
+      executable='aruco_node',
+      parameters=[aruco_params]
+  )
+  
   pick_action_node = Node(
     name="pick_action_node",
     package="tb4_openx_manipulation",
@@ -34,6 +45,7 @@ def generate_launch_description():
   )
   
   return LaunchDescription([
+    aruco_node,
     approach_action_node,
     pick_action_node,
     dispose_action_node,
