@@ -1,0 +1,6 @@
+geometry_msgs/PoseStamped trash_pose 
+---
+bool success
+string message
+---
+float64 distance_to_goal

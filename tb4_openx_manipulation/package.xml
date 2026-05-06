@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>tb4_openx_navigation</name>
+  <name>tb4_openx_manipulation</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="ghiyadev335@gmail.com">dev</maintainer>
@@ -11,14 +11,13 @@
 
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
-  <depend>nav2_msgs</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>tb4_openx_interfaces</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
   <depend>geometry_msgs</depend>
-  <depend>nav_msgs</depend>
-  <depend>lifecycle_msgs</depend>
-  <depend>action_msgs</depend>
-
-  <exec_depend>turtlebot4_navigation</exec_depend>
-  <exec_depend>nav2_bringup</exec_depend>
+  <depend>nav2_msgs</depend>
+  
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
