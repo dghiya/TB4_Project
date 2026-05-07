@@ -29,7 +29,7 @@ target_link_libraries(patrol_node navigator)
 ament_target_dependencies(patrol_node rclcpp rclcpp_action nav2_msgs geometry_msgs)
 
 # Install rules
-install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch config maps DESTINATION share/${PROJECT_NAME})
 
 install(TARGETS navigator patrol_node
   ARCHIVE DESTINATION lib
