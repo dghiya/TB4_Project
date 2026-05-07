@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!-- OpenManipulator Chain -->
+<robot name="open_manipulator_x" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="use_sim" default="true" />
+  <xacro:arg name="use_fake_hardware" default="false" />
+  <xacro:arg name="fake_sensor_commands" default="false" />
+  <xacro:arg name="port_name" default="/dev/ttyUSB0" />
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find open_manipulator_x_description)/gazebo/materials.xacro" />
+
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find open_manipulator_x_description)/gazebo/open_manipulator_x.gazebo.xacro" />
+
+  <!-- Import URDF -->
+  <xacro:include filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" />
+  <xacro:include filename="$(find turtlebot4_manipulator_description)/urdf/turtlebot4.urdf.xacro" />
+
+  <xacro:include filename="$(find turtlebot4_manipulator_description)/ros2_control/open_manipulator_x_system.ros2_control.xacro" />
+
+  <xacro:open_manipulator_x prefix="$(arg prefix)" />
+  <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
+  <xacro:open_manipulator_x_system
+    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+    use_fake_hardware="$(arg use_fake_hardware)"
+    fake_sensor_commands="$(arg fake_sensor_commands)"
+    port_name="$(arg port_name)"/>
+
+  <!-- Camera -->
+  <xacro:include filename="$(find turtlebot4_description)/urdf/sensors/camera_bracket.urdf.xacro" />
+  <xacro:camera_bracket name="oakd_camera_bracket_arm" parent_link="link5">
+    <origin xyz="0.0 0.0 0.01"/>
+  </xacro:camera_bracket>
+
+  <xacro:include filename="$(find turtlebot4_trash_actions)/config/oakd.urdf.xacro" />
+  <xacro:property name="oakd_pro_x_offset"             value="${5.84*cm2m}"/>
+  <xacro:property name="oakd_pro_y_offset"             value="${0*cm2m}"/>
+  <xacro:property name="oakd_pro_z_offset"             value="${9.676*cm2m}"/>
+  <xacro:oakd name="eef" parent_link="oakd_camera_bracket_arm">
+    <origin xyz="${oakd_pro_x_offset} ${oakd_pro_y_offset} ${oakd_pro_z_offset}"/>
+  </xacro:oakd>
+
+  <!-- World fixed joint-->
+  <joint name="$(arg prefix)world_fixed" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="tower_sensor_plate"/>
+    <child link="$(arg prefix)link1"/>
+  </joint>
+
+</robot>

@@ -24,14 +24,21 @@ ament_target_dependencies(navigator
   rclcpp rclcpp_action nav2_msgs geometry_msgs nav_msgs lifecycle_msgs action_msgs)
 
 # Build the Patrol Executable
-add_executable(patrol_node src/patrol.cpp)
-target_link_libraries(patrol_node navigator)
-ament_target_dependencies(patrol_node rclcpp rclcpp_action nav2_msgs geometry_msgs)
+# add_executable(patrol_node src/patrol.cpp)
+# target_link_libraries(patrol_node navigator)
+# ament_target_dependencies(patrol_node rclcpp rclcpp_action nav2_msgs geometry_msgs)
 
 # Install rules
 install(DIRECTORY launch config maps DESTINATION share/${PROJECT_NAME})
 
-install(TARGETS navigator patrol_node
+install(PROGRAMS
+  scripts/mission_controller.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS 
+  navigator 
+  # patrol_node
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}

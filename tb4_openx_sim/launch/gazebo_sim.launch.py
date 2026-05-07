@@ -124,9 +124,11 @@ def generate_launch_description():
         arguments=[
             '-topic', '/trash_block/robot_description',
             '-name', 'trash_block',
-            '-x', '2.25',
-            '-y', '1.0',
-            '-z', '0.1'
+            '-x', '2.2',
+            '-y', '0.0',
+            '-z', '0.2',
+            '-P', '1.57',   
+            '-Y', '-3.14',
         ],
         output='screen'
     )

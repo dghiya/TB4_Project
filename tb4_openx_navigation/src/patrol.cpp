@@ -2,7 +2,7 @@
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <nav2_msgs/action/navigate_through_poses.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
-#include <tb4_openx_navigation/navigator.hpp> // Updated Include
+#include <tb4_openx_navigation/navigator.hpp> 
 #include <vector>
 #include <iostream>
 #include <memory>
