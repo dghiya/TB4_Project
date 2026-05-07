@@ -18,4 +18,5 @@
     joints:
       - gripper_left_joint
     action_ns: gripper_cmd
+    max_effort: 0.5
     default: true

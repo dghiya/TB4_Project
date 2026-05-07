@@ -18,6 +18,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "action/Approach.action"
   "action/Pick.action"
   "action/Place.action"
+  "action/PickObject.action"
+  "action/PlaceObject.action"
   DEPENDENCIES builtin_interfaces geometry_msgs std_msgs action_msgs
 
 )

@@ -1,0 +1,7 @@
+geometry_msgs/PoseStamped place_pose
+float64 retreat_height
+---
+bool success
+string message
+---
+string current_phase
