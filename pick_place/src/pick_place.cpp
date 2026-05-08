@@ -15,8 +15,8 @@ using GoalHandlePlace = rclcpp_action::ServerGoalHandle<PlaceObject>;
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("omx_pick_server");
 
-static constexpr double GRIPPER_OPEN_POSITION = -0.030;
-static constexpr double GRIPPER_CLOSE_POSITION = -0.025;
+static constexpr double GRIPPER_OPEN_POSITION = 0.025;
+static constexpr double GRIPPER_CLOSE_POSITION = 0.015;
 static constexpr double GRIPPER_MAX_EFFORT = 0.0;
 
 class OmxPickServer : public rclcpp::Node
