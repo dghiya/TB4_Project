@@ -8,12 +8,14 @@ def generate_launch_description():
         get_package_share_directory('tb4_openx_navigation'),
         'config', 'patrol_waypoints.yaml')
 
-    return LaunchDescription([
-        Node(
+    patrol_node = Node(
             package='tb4_openx_navigation',
             executable='patrol_node',
             name='patrol_robot',
             parameters=[param_file],
             output='screen',
         )
+    
+    return LaunchDescription([
+        # patrol_node
     ])

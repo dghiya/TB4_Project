@@ -48,17 +48,19 @@ def main(args=None):
     node = TrashStateMachine()
     try:
         node.get_logger().info('Starting manipulation sequence...')
-        success = node.call_approach_trash("marker")
-        if success:
-            node.get_logger().info('Approached marker successfully. Picking...')
-            time.sleep(2.0)
-            pick_success = node.call_pick_trash()
-            if pick_success:
-                node.get_logger().info("Pick successful!")
-            else:
-                node.get_logger().error("Pick failed.")
+        # success = node.call_approach_trash("marker")
+        # if success:
+        #     node.get_logger().info('Approached marker successfully. Picking...')
+        
+        node.get_logger().info('Assuming robot is parked. Picking...')
+        time.sleep(2.0)
+        pick_success = node.call_pick_trash()
+        if pick_success:
+            node.get_logger().info("Pick successful!")
         else:
-            node.get_logger().error('Failed to approach marker.')
+            node.get_logger().error("Pick failed.")
+        # else:
+        #     node.get_logger().error('Failed to approach marker.')
     finally:
         node.destroy_node()
         rclpy.shutdown()

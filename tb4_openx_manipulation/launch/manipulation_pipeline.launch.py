@@ -46,7 +46,7 @@ def generate_launch_description():
   
   return LaunchDescription([
     aruco_node,
-    approach_action_node,
+    # approach_action_node,
     pick_action_node,
     dispose_action_node,
     # trash_collection_task_node # We will run this manually in a terminal to test!
