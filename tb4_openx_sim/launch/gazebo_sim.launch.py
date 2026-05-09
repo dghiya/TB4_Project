@@ -118,7 +118,7 @@ def generate_launch_description():
         arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link']
     )
     
-    spawn_artag = Node(
+    spawn_artag_1 = Node(
         package='ros_gz_sim',
         executable='create',
         arguments=[
@@ -130,6 +130,37 @@ def generate_launch_description():
             '-R', '1.57',
             '-P', '0.0',   
             '-Y', '-1.57',
+        ],
+        output='screen'
+    )
+    
+    spawn_artag_2 = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-topic', '/trash_block/robot_description',
+            '-name', 'trash_block_2', 
+            '-x', '-0.4',             
+            '-y', '-5.0',              
+            '-z', '0.2',
+            '-P', '1.57',   
+            '-Y', '0.0',
+        ],
+        output='screen'
+    )
+
+    # NEW: Block for Area 3
+    spawn_artag_3 = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-topic', '/trash_block/robot_description',
+            '-name', 'trash_block_3', 
+            '-x', '-4.0',              
+            '-y', '-3.0',             
+            '-z', '0.2',
+            '-P', '1.57',   
+            '-Y', '0.0',
         ],
         output='screen'
     )
@@ -154,6 +185,12 @@ def generate_launch_description():
         arguments=["gripper_controller", "--controller-manager", "/controller_manager"],
     )
 
+    artags = LaunchDescription([
+        spawn_artag_1,
+        spawn_artag_2,
+        spawn_artag_3
+    ])
+    
     return LaunchDescription([
         clock_bridge,  
         lidar_bridge, 
@@ -164,7 +201,7 @@ def generate_launch_description():
         robot_state_publisher,
         artag_state_publisher, 
         spawn_entity,
-        spawn_artag,           
+        artags,           
         load_joint_state_broadcaster,
         load_diffdrive_controller,
         load_arm_controller,

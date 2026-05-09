@@ -78,8 +78,8 @@ class MissionController(Node):
         self.zones = {
             'home':   dict(x= 0.0, y= 0.0, qz=0.0, qw=1.0),
             'area_1': dict(x= 2.0, y= 0.0, qz=0.0, qw=1.0),
-            'area_2': dict(x=-2.0, y= 2.0, qz=0.0, qw=1.0),
-            'area_3': dict(x= 1.0, y=-2.0, qz=0.0, qw=1.0),
+            'area_2': dict(x= -0.2, y= -5.0, qz=0.0, qw=1.0),
+            'area_3': dict(x= -3.8, y=-3.3, qz=0.0, qw=1.0),
         }
 
     # ──────────────────────────────────────────
@@ -401,7 +401,18 @@ class MissionController(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = MissionController()
-    node.execute_mission('area_1')   # ← change target area here
+    
+    # Create a list of the zones we want to clear
+    target_zones = ['area_1', 'area_2', 'area_3']
+    
+    for zone in target_zones:
+        node.get_logger().info(f'--- INITIATING MISSION FOR {zone.upper()} ---')
+        node.execute_mission(zone)
+        
+        # Add a small delay between missions so the robot settles before moving again
+        time.sleep(2.0)
+    
+    node.get_logger().info('ALL ZONES CLEARED. SHUTTING DOWN.')
     node.destroy_node()
     rclpy.shutdown()
 
