@@ -10,6 +10,7 @@
 
   <link name="artag">
     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="file://$(find tb4_openx_description)/models/artag/meshes/artag.dae"/>
       </geometry>
