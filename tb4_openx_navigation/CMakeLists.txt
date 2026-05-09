@@ -33,6 +33,7 @@ install(DIRECTORY launch config maps DESTINATION share/${PROJECT_NAME})
 
 install(PROGRAMS
   scripts/mission_controller.py
+  scripts/real_mission_controller.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
