@@ -40,7 +40,7 @@ from tb4_openx_interfaces.action import Pick
 #  Tuning constants  (tweak without touching logic)
 # ─────────────────────────────────────────────
 APPROACH_DIST       = 0.3   # metres  – final robot-to-marker distance
-LATERAL_TOL         = 0.025  # metres  – lateral centring tolerance
+LATERAL_TOL         = 0.03  # metres  – lateral centring tolerance
 DIST_TOL            = 0.025  # metres  – distance tolerance
 SKEW_LARGE_DEG      = 20.0   # degrees – threshold for lateral strafe correction
 SKEW_FINE_DEG       = 5.0    # degrees – threshold for in-place rotation correction
@@ -235,13 +235,25 @@ class MissionController(Node):
             cmd = Twist()
 
             # ── STEP 1: Rotate toward marker first (always fix lateral first) ──
+            # if abs(lateral_err) > LATERAL_TOL:
+            #     self.skew_fine_count = 0
+            #     self.get_logger().info(
+            #         f'[ALIGN] Step1: Centering lateral={lateral_err:+.3f}m')
+            #     cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
+            #     self.vel_pub.publish(cmd)
+            #     time.sleep(0.1)
+            
             if abs(lateral_err) > LATERAL_TOL:
                 self.skew_fine_count = 0
-                self.get_logger().info(
-                    f'[ALIGN] Step1: Centering lateral={lateral_err:+.3f}m')
-                cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
-                self.vel_pub.publish(cmd)
-                time.sleep(0.1)
+                self._lateral_step1_count = getattr(self, '_lateral_step1_count', 0) + 1
+                if self._lateral_step1_count > 30:  # max 3 seconds in Step 1
+                    self._lateral_step1_count = 0
+                    self.get_logger().warn('[ALIGN] Step1 timeout — forcing Step 2')
+                    # force move to next step by temporarily accepting lateral
+                else:
+                    cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
+                    self.vel_pub.publish(cmd)
+                    time.sleep(0.1)
 
             # ── STEP 2: Drive toward marker ─────────────────────────────────
             elif abs(dist_err) > DIST_TOL:
