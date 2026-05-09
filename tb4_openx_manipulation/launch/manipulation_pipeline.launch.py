@@ -39,6 +39,12 @@ def generate_launch_description():
     parameters=[moveit_config, {'use_sim_time': True}]
   )
 
+  tf_broadcaster_node = Node(
+      package='tb4_openx_manipulation',  
+      executable='aruco_to_tf.py',
+      name='aruco_to_tf'
+  )
+  
   trash_collection_task_node = Node(
       package='tb4_openx_manipulation',
       executable='trash_collection_task.py'
@@ -50,4 +56,5 @@ def generate_launch_description():
     pick_action_node,
     dispose_action_node,
     # trash_collection_task_node # We will run this manually in a terminal to test!
+    tf_broadcaster_node,
   ])

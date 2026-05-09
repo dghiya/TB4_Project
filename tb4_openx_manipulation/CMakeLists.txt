@@ -54,6 +54,7 @@ install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
 
 install(PROGRAMS
   scripts/trash_collection_task.py
+  scripts/aruco_to_tf.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

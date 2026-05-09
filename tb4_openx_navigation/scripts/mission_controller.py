@@ -59,7 +59,7 @@ class MissionController(Node):
     # ──────────────────────────────────────────
     def __init__(self):
         super().__init__('mission_controller')
-
+        
         # Action clients
         self.nav_client  = ActionClient(self, NavigateToPose, 'navigate_to_pose')
         self.pick_client = ActionClient(self, Pick,           'pick_trash')
