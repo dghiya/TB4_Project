@@ -98,6 +98,52 @@ def generate_launch_description():
             ('/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info', '/oakd/rgb/preview/camera_info')
         ]
     )
+
+    # Depth bridge — needed by Gemini Robotics-ER node for back-projection
+    depth_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='depth_bridge',
+        output='screen',
+        arguments=[
+            '/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[ignition.msgs.Image'
+        ],
+        remappings=[
+            ('/world/warehouse/model/tb4_openx/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image', '/oakd/depth/image_raw')
+        ]
+    )
+
+    # ---- Arm (eye-in-hand) RealSense camera bridges ------------------
+    # The realsense.urdf.xacro `arm` macro mounts an rgbd_camera sensor on
+    # `arm_rgb_camera_frame`. Bridge RGB image, camera_info, and depth
+    # so Gemini-ER (and other perception nodes) can use the wrist view.
+    arm_camera_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='arm_camera_bridge',
+        output='screen',
+        arguments=[
+            '/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
+            '/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo'
+        ],
+        remappings=[
+            ('/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/image', '/arm/rgb/image_raw'),
+            ('/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/camera_info', '/arm/rgb/camera_info')
+        ]
+    )
+
+    arm_depth_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='arm_depth_bridge',
+        output='screen',
+        arguments=[
+            '/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[ignition.msgs.Image'
+        ],
+        remappings=[
+            ('/world/warehouse/model/tb4_openx/link/arm_rgb_camera_frame/sensor/rgbd_camera/depth_image', '/arm/depth/image_raw')
+        ]
+    )
     
     rplidar_stf = Node(
         name='rplidar_stf',
@@ -192,9 +238,12 @@ def generate_launch_description():
     ])
     
     return LaunchDescription([
-        clock_bridge,  
-        lidar_bridge, 
-        camera_bridge,          
+        clock_bridge,
+        lidar_bridge,
+        camera_bridge,
+        depth_bridge,
+        arm_camera_bridge,
+        arm_depth_bridge,
         rplidar_stf,
         footprint_stf,
         gazebo,

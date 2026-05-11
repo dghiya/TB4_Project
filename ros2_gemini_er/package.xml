@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ros2_gemini_er</name>
+  <version>0.1.0</version>
+  <description>
+    Gemini Robotics-ER perception node for TurtleBot4 trash detection.
+    Phase 1: debug TF publisher using the front/body camera.
+    Publishes marker_gemini frame in parallel with ArUco marker frame.
+  </description>
+  <maintainer email="fazhara1@jh.edu">Fazil Khan</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>message_filters</exec_depend>
+  <!-- pip-installed deps (numpy, opencv-python, google-genai) are also
+       declared in setup.py install_requires so a clean checkout fails
+       loudly instead of silently at runtime. -->
+  <exec_depend>python3-numpy</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

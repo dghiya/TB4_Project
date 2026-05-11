@@ -51,10 +51,10 @@ def generate_launch_description():
   )
   
   return LaunchDescription([
-    aruco_node,
+    # aruco_node,          # DISABLED — Gemini provides marker TF + /aruco_poses
     # approach_action_node,
     pick_action_node,
     dispose_action_node,
     # trash_collection_task_node # We will run this manually in a terminal to test!
-    tf_broadcaster_node,
+    # tf_broadcaster_node, # DISABLED — Gemini publishes "marker" TF directly
   ])
