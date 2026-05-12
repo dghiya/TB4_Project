@@ -55,7 +55,7 @@ TB4_Project/
 ├── tb4_openx_navigation/            Nav2 wrappers, maps, mission controllers
 ├── tb4_openx_manipulation/          Trash-collection action servers
 ├── tb4_openx_interfaces/            Shared action / message definitions
-├── pick_place/                      Legacy pick/place (PickObject/PlaceObject actions)
+├── pick_place/                      OMX Pick/Place action server (real-hardware entry point)
 └── open_manipulator/                OMX MoveIt config + bringup
 ```
 
@@ -68,6 +68,24 @@ Detailed architecture and implementation notes live in `docs/`:
 - **[Navigation](docs/navigation.md)** — differential drive, Nav2 stack, visual servoing, and practical setup notes (parameter overrides, e-stop, CPU constraint).
 - **[Manipulation](docs/manipulation.md)** — OMX pick/place, MoveIt2, gripper control.
 - **[Perception](docs/perception.md)** — OAK-D camera, ArUco detection pipeline.
+
+---
+
+## Prerequisites
+
+Beyond a standard ROS 2 Humble install, the following packages must be available before `colcon build` will succeed:
+
+```bash
+sudo apt install \
+  ros-humble-turtlebot4-* \
+  ros-humble-nav2-bringup \
+  ros-humble-moveit \
+  ros-humble-moveit-resources \
+  ros-humble-ros-gz \
+  ros-humble-tf-transformations
+```
+
+The Dynamixel SDK + hardware interface and `ros2_aruco` are vendored under their own subdirectories in this repo and will build together with the rest of the workspace.
 
 ---
 
@@ -104,7 +122,7 @@ In RViz, click **2D Pose Estimate** to seed AMCL before running Nav2 goals or th
 
 ### Real robot
 
-The TurtleBot 4 RPi auto-launches `turtlebot4.service` on boot, so the `bringup` step below is only needed if the service is not running. All commands marked `[RPi]` are run via SSH on the robot; `[laptop]` commands run on your workstation.
+The TurtleBot 4 RPi auto-launches `turtlebot4.service` on boot, so the `bringup` step below is only needed if the service is not running. MoveIt2 and the manipulation pipeline run on the laptop rather than the RPi because the RPi 4B does not have enough CPU headroom to run them alongside Nav2 + OAK-D. All commands marked `[RPi]` are run via SSH on the robot; `[laptop]` commands run on your workstation.
 
 ```bash
 # [RPi] (only if turtlebot4.service is not active)
@@ -119,13 +137,13 @@ ros2 launch tb4_openx_navigation real_navigate.launch.py
 # [laptop] RViz — click 2D Pose Estimate on the map
 ros2 launch turtlebot4_viz view_robot.launch.py
 
-# [RPi] MoveIt2 for the real OMX
+# [laptop] MoveIt2 for the real OMX
 ros2 launch tb4_openx_manipulation move_group.launch.py use_sim:=false
 
-# [RPi] Manipulation pipeline
+# [laptop] Manipulation pipeline
 ros2 launch tb4_openx_manipulation real_manipulation_pipeline.launch.py
 
-# [RPi] Run the real-robot mission
+# [laptop] Run the real-robot mission
 ros2 run tb4_openx_navigation real_mission_controller.py
 ```
 
@@ -133,8 +151,10 @@ ros2 run tb4_openx_navigation real_mission_controller.py
 
 ## Reproducing the Demo: Things That Bite
 
-A few non-obvious gotchas observed on the physical TurtleBot 4 — full details are in [`docs/navigation.md`](docs/navigation.md#practical-setup-notes):
+A few non-obvious gotchas observed on the physical TurtleBot 4 — full details for the navigation items are in [`docs/navigation.md`](docs/navigation.md#practical-setup-notes), and for the manipulation items in [`docs/manipulation.md`](docs/manipulation.md):
 
 - The Create 3 boots with its e-stop engaged; clear it before sending any `/cmd_vel`.
 - The default Nav2 `bt_navigator` timing is too tight for the Create 3's odom timestamp behavior. The values that worked for us (in `/opt/ros/humble/share/turtlebot4_navigation/config/nav2.yaml`) are documented in the navigation doc.
 - The RPi 4B cannot run Nav2 and OAK-D + ArUco detection concurrently — CPU is the bottleneck, not software. The two capabilities are demonstrated sequentially.
+- **OMX gripper direction is not deterministic across power cycles.** The Dynamixel ID 15 motor on our specific arm has a non-standard EEPROM home offset, so the sign of the `GRIPPER_OPEN_POSITION` and `GRIPPER_CLOSE_POSITION` constants in `pick_place/src/pick_place.cpp` can flip after a 12V power cycle of the arm. Always verify gripper motion with a low-effort test command before running an autonomous Pick.
+- **MoveIt's `simple_controller_manager` silently drops `max_effort` for SRDF named-target gripper trajectories.** The pick/place server therefore controls the gripper through a dedicated `GripperCommand` action client and only uses MoveIt for the four arm joints. Replacing that bypass with stock MoveIt control will reintroduce gripper jam on real hardware.
