@@ -7,6 +7,13 @@ theme:
     - navigation.tabs # Adds top-level tabs if you want them
     - search.suggest  # Auto-suggests results in the search bar
 
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
 nav:
   - Home: index.md
   - Perception: perception.md
