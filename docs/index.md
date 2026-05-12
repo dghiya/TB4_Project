@@ -1,21 +1,50 @@
-#  Autonomous Object Retrieval Project
+# Autonomous Object Retrieval Project
 
-Welcome to the official documentation for our autonomous warehouse retrieval system. This project bridges advanced mobile navigation, robotic manipulation, and Vision-Language Models (VLMs) to create a fully autonomous robotic worker.
+Welcome to the official documentation for our autonomous warehouse retrieval 
+system. This project bridges advanced mobile navigation, robotic manipulation, 
+and Vision-Language Models (VLMs) to create a fully autonomous robotic worker.
 
 ---
 
-## Robot background
-The TurtleBot 4 is the next-generation ROS 2 educational and research robot. Built on the highly capable iRobot Create 3 mobile base, it is equipped with an array of sensors including an RPLidar and an OAK-D PRO spatial AI camera. It provides a robust, out-of-the-box platform for developing advanced SLAM, navigation, and computer vision applications.
+## Platform Overview
 
-## Project Details: VLM-Driven Warehouse Retrieval
+The TurtleBot 4 is the next-generation ROS 2 educational and research robot. 
+Built on the iRobot Create 3 mobile base, it features:
+
+- **RPLidar A1M8:** 2D laser scanner for SLAM and obstacle avoidance
+- **OAK-D Pro:** Spatial AI stereo camera for RGB-D perception
+- **IMU & Wheel Encoders:** For accurate odometry
+
+Our project extends this platform with:
+
+- **OpenManipulator-X:** 4-DOF robotic arm for object manipulation
+- **Google Gemini VLM:** Vision-Language Model for intelligent object recognition
+
+---
+
+## System Requirements
+
+| Component | Version |
+|-----------|---------|
+| Ubuntu | 22.04 LTS |
+| ROS 2 | Humble Hawksbill |
+| Python | 3.10+ |
+| MoveIt 2 | Humble |
+| Gazebo | Ignition Fortress |
+
+---
+
+## Mission Pipeline
+
 Our project elevates the standard TurtleBot 4 by integrating it with an OpenManipulator-X robotic arm and the Google Gemini Vision-Language Model (VLM). 
 
 We have engineered an autonomous pipeline for object retrieval within a simulated warehouse environment. The system operates in the following sequence:
 
-1. **Intelligence & Dispatch:** The Gemini VLM analyzes the environment or user request to identify which specific object needs to be retrieved. 
-2. **Transit:** The robot utilizes the Nav2 stack to autonomously navigate to the designated warehouse zone.
-3. **Perception & Grasping:** Upon arrival, the robot scans the area for the target item. Using a custom visual servoing pipeline, it aligns itself and uses the OpenManipulator-X arm to pick up the object.
-4. **Return & Drop-off:** The robot calculates a path back to its "Home" base and safely deposits the retrieved item.
+1. **Dispatch:** User issues a retrieval command specifying the target zone.
+2. **Transit:** Robot navigates to the designated warehouse zone using Nav2.
+3. **Intelligence & Perception:** Upon arrival, the Gemini VLM analyzes camera feed to identify and locate the target object.
+4. **Alignment & Grasping:** Visual servoing aligns the robot, then OpenManipulator-X picks the object.
+5. **Return & Drop-off:** Robot navigates home and deposits the item.
 
 ---
 
@@ -60,53 +89,60 @@ colcon build
 source install/setup.bash
 ```
 
-### 2. Run Robot in Simulation
+### 2. Simulation Setup
 Ensure your workspace is fully built and sourced before launching any nodes:
 ```bash
-Terminal 1: 
+Terminal 1 - Gazebo Simulation:
 ros2 launch tb4_openx_sim gazebo_sim.launch.py
 
 *** Wait for all controllers to load
 
-Terminal 2: 
+Terminal 2 - Navigation Stack:
 ros2 launch tb4_openx_navigation navigate.launch.py
 
-*** Estimate the Location of the Robot using 2D Pose
+*** Open RViz, click "2D Pose Estimate" button, then click and drag on the map 
+to set the robot's initial position and orientation.
 
-Terminal 3: 
+Terminal 3 - MoveIt 2:
 ros2 launch tb4_openx_manipulation move_group.launch.py
 
-Terminal 4: 
+Terminal 4 - Manipulation Pipeline:
 ros2 launch tb4_openx_manipulation manipulation_pipeline.launch.py
 
-Terminal 5: 
+Terminal 5 - Mission Controller:
 ros2 run tb4_openx_navigation mission_controller.py
 
 
 ```
 
-### 1. Install Dependencies
+### 3. Real Robot Setup
 Ensure your workspace is fully built and sourced before launching any nodes:
 ```bash
 
-Terminal 1: 
+Terminal 1 - TurtleBot 4 Bringup (on robot):
 ros2 launch turtlebot4_bringup standard.launch.py
 
 *** Ensure the you saved your Map correct and all the ros2 topic from 
 TB4 is publishing on our PC
 
-Terminal 2: 
+Terminal 2 - Navigation Stack:
 ros2 launch tb4_openx_navigation real_navigate.launch.py
 
 *** Make sure Map is loaded and everthing is loaded 
 
-Terminal 3: 
+Terminal 3 - MoveIt 2:
 ros2 launch tb4_openx_manipulation move_group.launch.py use_sim:=false
 
-Terminal 4: 
+Terminal 4 - Manipulation Pipeline:
 ros2 launch tb4_openx_manipulation real_manipulation_pipeline.launch.py
 
-Terminal 5: 
+Terminal 5 - Mission Controller:
 ros2 run tb4_openx_navigation real_mission_controller.py
 
 ```
+
+### Authors
+
+* Dev Dipak Ghiya
+* Fazil Khan
+* Qingyuan Cao

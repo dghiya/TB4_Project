@@ -15,6 +15,20 @@ This is a lightweight, highly capable robotic arm designed specifically for rese
 
 ---
 
+## OpenManipulator-X Specifications
+
+| Specification | Value |
+|---------------|-------|
+| Degrees of Freedom | 4 DOF + Gripper |
+| Reach | 380mm |
+| Payload | 500g |
+| Actuators | DYNAMIXEL XM430-W350 |
+| Communication | U2D2 (USB to Dynamixel) |
+| Weight | 0.7 kg |
+| Repeatability | ±0.2mm |
+
+---
+
 ## Autonomous Pick and Place
 In this pipeline, the arm acts as the physical worker. Its job is broken down into a highly coordinated sequence that only triggers once the visual servoing system has perfectly aligned the robot base with the target.
 
@@ -28,7 +42,7 @@ When the mission controller requests a "Pick," MoveIt calculates the precise joi
 Once a safe trajectory is found, the arm executes the pick sequence:
 
 * **Extend:** The arm reaches out to the coordinates provided by the perception system.
-* **Grasp:** The parallel gripper closes around the ArTag block.
+* **Grasp:** The parallel gripper closes around the target object (identified by its ArUco marker).
 * **Tuck for Transit:** Instead of driving with the arm fully extended (which would shift the robot's center of gravity and cause navigation issues), the arm pulls the object back into a compact, safe "Home" position for the drive back.
 
 ### 3. The Place Sequence
@@ -43,3 +57,5 @@ Watch the OpenManipulator-X execute the precise pick sequence after the visual s
 <div style="text-align: center;">
   <iframe src="https://drive.google.com/file/d/1bfqER796fDf3-FT2vA-Rr2eJQVJ2wEo3/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
 </div>
+
+<!-- [![Manipulation Demo](assets/manipulation_thumbnail.png)](https://drive.google.com/file/d/1bfqER796fDf3-FT2vA-Rr2eJQVJ2wEo3/view) -->
