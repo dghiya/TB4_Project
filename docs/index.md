@@ -42,7 +42,7 @@ We have engineered an autonomous pipeline for object retrieval within a simulate
 
 1. **Dispatch:** User issues a retrieval command specifying the target zone.
 2. **Transit:** Robot navigates to the designated warehouse zone using Nav2.
-3. **Intelligence & Perception:** Upon arrival, the Gemini VLM analyzes camera feed to identify and locate the target object.
+3. **Search & Perception:** Upon arrival, the perception system Gemini VLM or ArUco scan to identify and locate the target object.
 4. **Alignment & Grasping:** Visual servoing aligns the robot, then OpenManipulator-X picks the object.
 5. **Return & Drop-off:** Robot navigates home and deposits the item.
 
