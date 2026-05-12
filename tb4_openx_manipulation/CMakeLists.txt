@@ -16,13 +16,6 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
 
-# 1. Approach Server
-add_executable(approach_trash_server src/ApproachTrash.cpp src/approach_node.cpp)
-target_include_directories(approach_trash_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(approach_trash_server
-  rclcpp rclcpp_action moveit_ros_planning_interface tb4_openx_interfaces tf2_ros tf2_geometry_msgs geometry_msgs nav2_msgs)
 
 # 2. Pick Server
 add_executable(pick_trash_server src/PickTrash.cpp src/pick_node.cpp)
@@ -42,7 +35,6 @@ ament_target_dependencies(place_trash_server
 
 # Install Rules
 install(TARGETS
-  approach_trash_server
   pick_trash_server
   place_trash_server
   DESTINATION lib/${PROJECT_NAME}
@@ -50,10 +42,12 @@ install(TARGETS
 
 install(DIRECTORY include/ DESTINATION include)
 
-install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY 
+  launch 
+  config 
+DESTINATION share/${PROJECT_NAME})
 
 install(PROGRAMS
-  scripts/trash_collection_task.py
   scripts/aruco_to_tf.py
   DESTINATION lib/${PROJECT_NAME}
 )
@@ -65,4 +59,5 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_include_directories(include)
 ament_package()

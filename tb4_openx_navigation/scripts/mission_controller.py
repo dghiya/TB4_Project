@@ -36,21 +36,18 @@ from rclpy.node import Node
 from tb4_openx_interfaces.action import Pick
 
 
-# ─────────────────────────────────────────────
-#  Tuning constants  (tweak without touching logic)
-# ─────────────────────────────────────────────
-APPROACH_DIST       = 0.3   # metres  – final robot-to-marker distance
-LATERAL_TOL         = 0.03  # metres  – lateral centring tolerance
-DIST_TOL            = 0.025  # metres  – distance tolerance
-SKEW_LARGE_DEG      = 20.0   # degrees – threshold for lateral strafe correction
-SKEW_FINE_DEG       = 5.0    # degrees – threshold for in-place rotation correction
-SKEW_TOL_DEG        = 10.0    # degrees – "good enough" tolerance
-MAX_ALIGN_ATTEMPTS  = 10      # give up after N correction cycles
-SKEW_FINE_ATTEMPTS  = 5   # max fine skew corrections before accepting
-SPIN_SPEED          = 0.3    # rad/s   – search spin speed
-SPIN_TIMEOUT        = 14.0   # seconds – time allowed for one full 360°
-LATERAL_SPEED       = 0.10   # m/s     – strafe drive speed
-TURN_SPEED          = 0.45   # rad/s   – rotation speed for corrections
+APPROACH_DIST       = 0.3       # metres  – final robot-to-marker distance
+LATERAL_TOL         = 0.03      # metres  – lateral centring tolerance
+DIST_TOL            = 0.025     # metres  – distance tolerance
+SKEW_LARGE_DEG      = 20.0      # degrees – threshold for lateral strafe correction
+SKEW_FINE_DEG       = 5.0       # degrees – threshold for in-place rotation correction
+SKEW_TOL_DEG        = 10.0      # degrees – "good enough" tolerance
+MAX_ALIGN_ATTEMPTS  = 10        # give up after N correction cycles
+SKEW_FINE_ATTEMPTS  = 5         # max fine skew corrections before accepting
+SPIN_SPEED          = 0.3       # rad/s   – search spin speed
+SPIN_TIMEOUT        = 14.0      # seconds – time allowed for one full 360°
+LATERAL_SPEED       = 0.10      # m/s     – strafe drive speed
+TURN_SPEED          = 0.45      # rad/s   – rotation speed for corrections
 MARKER_FRAME        = "marker"  # TF frame name expected by Pick action server
 
 
@@ -62,9 +59,9 @@ class MissionController(Node):
         
         # Action clients
         self.nav_client  = ActionClient(self, NavigateToPose, 'navigate_to_pose')
-        self.pick_client = ActionClient(self, Pick,           'pick_trash')
+        self.pick_client = ActionClient(self, Pick, 'pick_trash')
 
-        # Velocity publisher  (no namespace – matches topic list)
+        # Velocity publisher 
         self.vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.skew_fine_count = 0
 
@@ -74,7 +71,7 @@ class MissionController(Node):
         self.create_subscription(PoseArray, '/aruco_poses',
                                  self._vision_cb, 10)
 
-        # Zone map  (add / edit zones here)
+        # Zone map  
         self.zones = {
             'home':   dict(x= 0.0, y= 0.0, qz=0.0, qw=1.0),
             'area_1': dict(x= 2.0, y= 0.0, qz=0.0, qw=1.0),
@@ -199,7 +196,7 @@ class MissionController(Node):
             self.get_logger().info(f'[SEARCH] Centring lat={lateral_err:+.3f}m')
             if abs(lateral_err) < 0.02:
                 self._stop()
-                self.get_logger().info('[SEARCH] Marker centred ✅')
+                self.get_logger().info('[SEARCH] Marker centred ')
                 return True
             cmd = Twist()
             cmd.angular.z = max(-0.15, min(0.15, -2.0 * lateral_err))
@@ -218,7 +215,7 @@ class MissionController(Node):
         while rclpy.ok() and attempts < MAX_ALIGN_ATTEMPTS:
             rclpy.spin_once(self, timeout_sec=0.1)
             if self.target_pose is None:
-                self.get_logger().warn('[ALIGN] No pose – waiting...')
+                self.get_logger().warn('[ALIGN] No pose - waiting...')
                 continue
 
             pose         = self.target_pose
@@ -234,22 +231,13 @@ class MissionController(Node):
 
             cmd = Twist()
 
-            # ── STEP 1: Rotate toward marker first (always fix lateral first) ──
-            # if abs(lateral_err) > LATERAL_TOL:
-            #     self.skew_fine_count = 0
-            #     self.get_logger().info(
-            #         f'[ALIGN] Step1: Centering lateral={lateral_err:+.3f}m')
-            #     cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
-            #     self.vel_pub.publish(cmd)
-            #     time.sleep(0.1)
-            
+            # ── STEP 1: Rotate toward marker first (always fix lateral first) ──            
             if abs(lateral_err) > LATERAL_TOL:
                 self.skew_fine_count = 0
                 self._lateral_step1_count = getattr(self, '_lateral_step1_count', 0) + 1
                 if self._lateral_step1_count > 30:  # max 3 seconds in Step 1
                     self._lateral_step1_count = 0
                     self.get_logger().warn('[ALIGN] Step1 timeout — forcing Step 2')
-                    # force move to next step by temporarily accepting lateral
                 else:
                     cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
                     self.vel_pub.publish(cmd)
@@ -327,7 +315,7 @@ class MissionController(Node):
             else:
                 self._stop()
                 self.get_logger().info(
-                    f'[ALIGN] ✅ Aligned!  '
+                    f'[ALIGN] Aligned!  '
                     f'lat={lateral_err:+.3f}m  '
                     f'dist={fwd_dist:.3f}m  '
                     f'skew={skew_deg:+.1f}°')
@@ -402,16 +390,12 @@ def main(args=None):
     rclpy.init(args=args)
     node = MissionController()
     
-    # Create a list of the zones we want to clear
     target_zones = ['area_1', 'area_2', 'area_3']
     
     for zone in target_zones:
         node.get_logger().info(f'--- INITIATING MISSION FOR {zone.upper()} ---')
         node.execute_mission(zone)
-        
-        # Add a small delay between missions so the robot settles before moving again
         time.sleep(2.0)
-    
     node.get_logger().info('ALL ZONES CLEARED. SHUTTING DOWN.')
     node.destroy_node()
     rclpy.shutdown()

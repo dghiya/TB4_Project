@@ -10,8 +10,6 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     pkg_description = get_package_share_directory('tb4_openx_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
-    
-    # We need the official TB4 package to grab the physical warehouse 3D model
     pkg_tb4_ign = get_package_share_directory('turtlebot4_ignition_bringup')
 
     xacro_file = os.path.join(pkg_description, 'urdf', 't4_manipulator.urdf.xacro')
@@ -38,7 +36,6 @@ def generate_launch_description():
         }]
     )
 
-    # UPDATED: Load the physical warehouse to match the Nav2 map!
     warehouse_world = os.path.join(pkg_tb4_ign, 'worlds', 'warehouse.sdf')
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -70,7 +67,7 @@ def generate_launch_description():
         ]
     )
 
-    # This takes the simulated laser scans and pipes them into the /scan topic for AMCL.
+
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -134,6 +131,7 @@ def generate_launch_description():
         output='screen'
     )
     
+    # Area 2
     spawn_artag_2 = Node(
         package='ros_gz_sim',
         executable='create',
@@ -142,14 +140,14 @@ def generate_launch_description():
             '-name', 'trash_block_2', 
             '-x', '-0.4',             
             '-y', '-5.0',              
-            '-z', '0.2',
+            '-z', '0.3',
             '-P', '1.57',   
             '-Y', '0.0',
         ],
         output='screen'
     )
 
-    # NEW: Block for Area 3
+    # Area 3
     spawn_artag_3 = Node(
         package='ros_gz_sim',
         executable='create',

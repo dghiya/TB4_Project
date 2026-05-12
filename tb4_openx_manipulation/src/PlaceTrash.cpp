@@ -46,6 +46,8 @@ void PlaceTrashServer::initialize_moveit()
 rclcpp_action::GoalResponse PlaceTrashServer::handle_goal(
   const rclcpp_action::GoalUUID &, std::shared_ptr<const PlaceTrash::Goal> goal)
 {
+  (void)goal;
+  
   RCLCPP_INFO(this->get_logger(), "Received place goal.");
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }

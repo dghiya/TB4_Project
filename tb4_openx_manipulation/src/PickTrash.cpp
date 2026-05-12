@@ -103,7 +103,6 @@ void PickTrashServer::execute_pick(const std::shared_ptr<GoalHandle> goal_handle
   double x = tf.transform.translation.x;
   double y = tf.transform.translation.y;
   double z_above = 0.18;
-  double z_grasp = 0.13;
 
   auto feedback = std::make_shared<PickTrash::Feedback>();
   feedback->distance_to_goal = std::hypot(x, y);
@@ -119,40 +118,14 @@ void PickTrashServer::execute_pick(const std::shared_ptr<GoalHandle> goal_handle
     return;
   }
 
-  // RCLCPP_INFO(this->get_logger(), "Approaching object...");
-  // std::vector<geometry_msgs::msg::Pose> waypoints;
-  // geometry_msgs::msg::Pose pose;
-  // pose.position.x = x;
-  // pose.position.y = y;
-  // pose.position.z = z_above;
-  // pose.orientation.w = 1.0;  // No rotation for 4DOF
-  // waypoints.push_back(pose);
-
-  // pose.position.z = z_grasp;
-  // waypoints.push_back(pose);
-
-  // moveit_msgs::msg::RobotTrajectory traj;
-  // if (arm_group_->computeCartesianPath(waypoints, 0.01, 0.0, traj) < 0.5) {
-  //   auto result = std::make_shared<PickTrash::Result>();
-  //   result->success = false;
-  //   result->message = "Failed to compute Cartesian path.";
-  //   goal_handle->abort(result);
-  //   return;
-  // }
-
-  // arm_group_->execute(traj);
 
   RCLCPP_INFO(this->get_logger(), "Moving to pre-grasp joint config...");
 
   std::vector<double> joint_group_positions_arm = {
-  //   0.0349066,  // Joint 1
-  //   0.279253,   // Joint 2
-  // -0.628319,   // Joint 3
-  //   1.88496     // Joint 4
-  -0.122173,
-  0.558505,
-  -0.122173,
-  1.09956
+    -0.122173,
+    0.558505,
+    -0.122173,
+    1.09956
   };
 
   arm_group_->setJointValueTarget(joint_group_positions_arm);
@@ -165,38 +138,9 @@ void PickTrashServer::execute_pick(const std::shared_ptr<GoalHandle> goal_handle
     return;
   }
   RCLCPP_INFO(this->get_logger(), "Planning group: %s", arm_group_->getName().c_str());
-RCLCPP_INFO(this->get_logger(), "End effector link: %s", arm_group_->getEndEffectorLink().c_str());
-
-
-// RCLCPP_INFO(this->get_logger(), "Refining X/Y position using Cartesian motion...");
-
-// // Wait a bit to ensure MoveIt receives robot state
-// // rclcpp::sleep_for(std::chrono::milliseconds(500));
-// rclcpp::sleep_for(std::chrono::seconds(2));
-// arm_group_->setStartStateToCurrentState();
-
-// std::vector<geometry_msgs::msg::Pose> waypoints;
-// rclcpp::sleep_for(std::chrono::seconds(2));
-
-// geometry_msgs::msg::Pose current_pose = arm_group_->getCurrentPose().pose;
-// waypoints.push_back(current_pose);
-
-// geometry_msgs::msg::Pose target_pose = current_pose;
-// target_pose.position.x = x;  // x from aruco
-// target_pose.position.y = y;  // y from aruco
-// target_pose.position.z = 0.235;  
-// waypoints.push_back(target_pose);
-
-// moveit_msgs::msg::RobotTrajectory trajectory_approach;
-// double fraction = arm_group_->computeCartesianPath(waypoints, 0.001, 0.0, trajectory_approach);
-// RCLCPP_INFO(this->get_logger(), "Cartesian path fraction: %.2f", fraction);
-
-// arm_group_->execute(trajectory_approach);
-
-
-
-
+  RCLCPP_INFO(this->get_logger(), "End effector link: %s", arm_group_->getEndEffectorLink().c_str());
   RCLCPP_INFO(this->get_logger(), "Closing gripper...");
+
   gripper_group_->setNamedTarget("close");
   if (gripper_group_->move() != moveit::core::MoveItErrorCode::SUCCESS) {
     auto result = std::make_shared<PickTrash::Result>();
@@ -207,7 +151,6 @@ RCLCPP_INFO(this->get_logger(), "End effector link: %s", arm_group_->getEndEffec
   }
   RCLCPP_INFO(this->get_logger(), "Retreating...");
   std::vector<geometry_msgs::msg::Pose> retreat;
-  // pose.position.z = z_above;
   geometry_msgs::msg::Pose pose = arm_group_->getCurrentPose().pose;
   pose.position.z = z_above;
 

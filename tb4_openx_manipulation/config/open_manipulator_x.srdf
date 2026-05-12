@@ -53,6 +53,8 @@
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="tower_sensor_plate" child_link="tower_sensor_plate"/>
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="gripper_right_joint"/>
+    <passive_joint name="wheel_drop_left_joint" />
+    <passive_joint name="wheel_drop_right_joint" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="gripper_left_link" link2="gripper_right_link" reason="Never"/>
     <disable_collisions link1="gripper_left_link" link2="link4" reason="Never"/>

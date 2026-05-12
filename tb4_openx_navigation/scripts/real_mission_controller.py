@@ -36,9 +36,7 @@ from rclpy.node import Node
 from tb4_openx_interfaces.action import Pick
 
 
-# ─────────────────────────────────────────────
-#  Tuning constants  (tweak without touching logic)
-# ─────────────────────────────────────────────
+
 APPROACH_DIST       = 0.3   # metres  – final robot-to-marker distance
 LATERAL_TOL         = 0.03  # metres  – lateral centring tolerance
 DIST_TOL            = 0.025  # metres  – distance tolerance
@@ -199,7 +197,7 @@ class MissionController(Node):
             self.get_logger().info(f'[SEARCH] Centring lat={lateral_err:+.3f}m')
             if abs(lateral_err) < 0.02:
                 self._stop()
-                self.get_logger().info('[SEARCH] Marker centred ✅')
+                self.get_logger().info('[SEARCH] Marker centred ')
                 return True
             cmd = Twist()
             cmd.angular.z = max(-0.15, min(0.15, -2.0 * lateral_err))
@@ -234,15 +232,7 @@ class MissionController(Node):
 
             cmd = Twist()
 
-            # ── STEP 1: Rotate toward marker first (always fix lateral first) ──
-            # if abs(lateral_err) > LATERAL_TOL:
-            #     self.skew_fine_count = 0
-            #     self.get_logger().info(
-            #         f'[ALIGN] Step1: Centering lateral={lateral_err:+.3f}m')
-            #     cmd.angular.z = max(-0.25, min(0.25, -2.5 * lateral_err))
-            #     self.vel_pub.publish(cmd)
-            #     time.sleep(0.1)
-            
+            # ── STEP 1: Rotate toward marker first (always fix lateral first) ─            
             if abs(lateral_err) > LATERAL_TOL:
                 self.skew_fine_count = 0
                 self._lateral_step1_count = getattr(self, '_lateral_step1_count', 0) + 1
@@ -327,7 +317,7 @@ class MissionController(Node):
             else:
                 self._stop()
                 self.get_logger().info(
-                    f'[ALIGN] ✅ Aligned!  '
+                    f'[ALIGN] Aligned!  '
                     f'lat={lateral_err:+.3f}m  '
                     f'dist={fwd_dist:.3f}m  '
                     f'skew={skew_deg:+.1f}°')

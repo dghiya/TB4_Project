@@ -1,0 +1,14 @@
+site_name: Object Retrival  
+site_url: https://dghiya.github.io/TB4_Project/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs # Adds top-level tabs if you want them
+    - search.suggest  # Auto-suggests results in the search bar
+
+nav:
+  - Home: index.md
+  - Perception: perception.md
+  - Navigation: navigation.md
+  - Manipulation: manipulation.md
