@@ -8,11 +8,41 @@ Developed for **EN.530.707 Robot Systems Programming (RSP)**, Johns Hopkins Univ
 
 ## Demonstration
 
-The full demonstration videos are embedded in [`docs/navigation.md`](docs/navigation.md#demonstration). They show macro-navigation across the lab using Nav2 and closed-loop visual servoing to an ArUco-tagged target.
+### Project overview
+
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1isiiOjH_H5B2IAAsM0pp6g-UGzWQRGE0/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<br>
+
+### Navigation
+
+Macro-navigation across the lab with Nav2, and closed-loop visual servoing onto an ArUco-tagged target.
+
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1TDqaOe0okKbLeeknQ6TVHRiTn6oLMGKB/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<br>
+
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1sC0yaukU-X11lLwqfCjl5fWIEFh2VKiA/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<br>
+
+### Manipulation
+
+Pick-and-place on the real OpenManipulator-X arm.
+
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1bfqER796fDf3-FT2vA-Rr2eJQVJ2wEo3/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<br>
 
 ---
 
 ## Repository Structure
+
+```text
 TB4_Project/
 ├── docs/                            Architecture documentation (start here)
 │   ├── index.md
@@ -27,6 +57,7 @@ TB4_Project/
 ├── tb4_openx_interfaces/            Shared action / message definitions
 ├── pick_place/                      Legacy pick/place (PickObject/PlaceObject actions)
 └── open_manipulator/                OMX MoveIt config + bringup
+```
 
 ---
 
@@ -34,7 +65,7 @@ TB4_Project/
 
 Detailed architecture and implementation notes live in `docs/`:
 
-- **[Navigation](docs/navigation.md)** — differential drive, Nav2 stack, visual servoing, demo videos, and practical setup notes (parameter overrides, e-stop, CPU constraint).
+- **[Navigation](docs/navigation.md)** — differential drive, Nav2 stack, visual servoing, and practical setup notes (parameter overrides, e-stop, CPU constraint).
 - **[Manipulation](docs/manipulation.md)** — OMX pick/place, MoveIt2, gripper control.
 - **[Perception](docs/perception.md)** — OAK-D camera, ArUco detection pipeline.
 
