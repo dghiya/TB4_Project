@@ -1,4 +1,4 @@
-# TB4_Project — Autonomous Trash Collection with TurtleBot 4 + OpenManipulator-X
+# Autonomous Trash Collection with TurtleBot 4 + OpenManipulator-X
 
 A ROS 2 Humble project that combines map-based navigation, ArUco-tagged object detection, and a 5-DoF manipulator to drive a TurtleBot 4 to a marker, identify the trash object, and pick-and-place it autonomously.
 
