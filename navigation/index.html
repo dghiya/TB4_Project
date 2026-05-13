@@ -1,0 +1,877 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://dghiya.github.io/TB4_Project/navigation/">
+      
+      
+        <link rel="prev" href="../perception/">
+      
+      
+        <link rel="next" href="../manipulation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Navigation - Object Retrival</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#navigation-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Object Retrival" class="md-header__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Object Retrival
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Navigation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../perception/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Perception
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Navigation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../manipulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Manipulation
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Object Retrival" class="md-nav__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Object Retrival
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-turtlebot-4-differential-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The TurtleBot 4 Differential Drive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-planning-macro-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Planning (Macro-Navigation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="High-Level Planning (Macro-Navigation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localization-amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization (AMCL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nav2-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Nav2 Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#low-level-planning-visual-servoing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-Level Planning (Visual Servoing)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-setup-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Setup Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Setup Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nav2-parameter-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nav2 parameter overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-launch-checks-on-the-real-robot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-launch checks on the real robot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-constraint-nav2-and-aruco-do-not-run-concurrently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU constraint: Nav2 and ArUco do not run concurrently
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manipulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manipulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-turtlebot-4-differential-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The TurtleBot 4 Differential Drive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-planning-macro-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Planning (Macro-Navigation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="High-Level Planning (Macro-Navigation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localization-amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization (AMCL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nav2-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Nav2 Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#low-level-planning-visual-servoing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-Level Planning (Visual Servoing)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-setup-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Setup Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Setup Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nav2-parameter-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nav2 parameter overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-launch-checks-on-the-real-robot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-launch checks on the real robot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-constraint-nav2-and-aruco-do-not-run-concurrently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU constraint: Nav2 and ArUco do not run concurrently
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="navigation-architecture">Navigation Architecture</h1>
+<p>The navigation pipeline for the TurtleBot 4 OpenX project manages the complete mobility of the robot, from driving across the user environment to making centimeter-level adjustments to pick up an object.</p>
+<hr />
+<h2 id="demonstration">Demonstration</h2>
+<p>Two short clips show the full pipeline running on real hardware: macro-navigation across the lab using Nav2, and closed-loop visual servoing to stop in front of an ArUco-tagged object.</p>
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1TDqaOe0okKbLeeknQ6TVHRiTn6oLMGKB/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<p><br></p>
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1sC0yaukU-X11lLwqfCjl5fWIEFh2VKiA/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+<p><br></p>
+<hr />
+<h2 id="the-turtlebot-4-differential-drive">The TurtleBot 4 Differential Drive</h2>
+<p>The physical movement of the TurtleBot 4 is based on a <strong>differential drive</strong> system. Instead of steering like a car, the robot relies on two independently powered wheels located on either side of its base.</p>
+<p>The robot controls its speed and direction strictly by varying the speed of these two wheels:</p>
+<ul>
+<li><strong>Driving Straight:</strong> Both wheels spin forward at the exact same speed.</li>
+<li><strong>Turning:</strong> One wheel spins faster than the other, causing the robot to arc.</li>
+<li><strong>Spinning in Place:</strong> The wheels spin in opposite directions at the same speed, allowing the robot to rotate on its center axis with a zero turning radius. This is highly useful for scanning warehouse zones for ArUco markers.</li>
+</ul>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>To ensure both speed across long distances and precise alignment for the robotic arm, we split the navigation into two distinct phases:</p>
+<ol>
+<li>
+<p><strong>High-Level (Macro) Navigation:</strong> We use the Nav2 stack to handle driving from the home base to the general vicinity of the target object.</p>
+</li>
+<li>
+<p><strong>Low-Level (Micro) Navigation:</strong> Once the robot reaches the target zone, standard navigation isn't accurate enough for a robotic arm to grab something. We switch to <strong>Visual Servoing</strong>, which uses the robot's camera to make small, precise wheel adjustments to perfectly align with the target.</p>
+</li>
+</ol>
+<hr />
+<h2 id="high-level-planning-macro-navigation">High-Level Planning (Macro-Navigation)</h2>
+<p>Our high-level system relies on two main components to get the robot across the user environment safely:</p>
+<h3 id="localization-amcl">Localization (AMCL)</h3>
+<p>Before the robot can move, it needs to know where it is. We provide the robot with a static 2D occupancy map of the environment (produced beforehand with <code>slam_toolbox</code>). Using <strong>Adaptive Monte Carlo Localization (AMCL)</strong>, the robot maintains hundreds of candidate position guesses — called <em>particles</em> — and uses each laser scan from the RPLidar to keep particles that match the map well and drop the ones that don't. Over a few seconds the particle cloud converges onto the robot's true pose, which is visible in RViz as the swarm of small arrows that gradually tighten around the robot footprint.</p>
+<h3 id="the-nav2-stack">The Nav2 Stack</h3>
+<p>Once the robot is localized, the Nav2 stack handles driving. Nav2 is organized around a <strong>Behavior Tree</strong> that orchestrates three kinds of components in sequence:</p>
+<ul>
+<li><strong>Global Planning:</strong> The <code>planner_server</code> (we use the NavFn / A* planner) computes an optimal path from the current pose to the goal pose through the known map, automatically routing around walls and inflated obstacles.</li>
+<li><strong>Local Control:</strong> The <code>controller_server</code> (we use the DWB local planner) tracks that path while continuously scanning for new, unmapped obstacles like a person walking by. It outputs <code>/cmd_vel</code> commands that follow the path smoothly without colliding.</li>
+<li><strong>Recovery:</strong> If progress stalls or the path is blocked, the Behavior Tree falls back to recovery behaviors — clearing the costmap, spinning in place to refresh laser data, or backing up — before retrying the goal.</li>
+</ul>
+<p>The default Nav2 configuration for the TurtleBot 4 needs a few parameter overrides to run reliably on real hardware. The most important ones are documented in <strong>Practical Setup Notes</strong> below.</p>
+<hr />
+<h2 id="low-level-planning-visual-servoing">Low-Level Planning (Visual Servoing)</h2>
+<p>Once Nav2 brings the robot to the correct environment zone, the system transitions to low-level planning to prepare for object retrieval.</p>
+<p><strong>Visual Servoing</strong> is a control method that directly links the robot's camera vision to its motor controls. The pipeline is:</p>
+<ol>
+<li>The OAK-D camera publishes RGB frames at roughly 30 Hz.</li>
+<li><code>aruco_node</code> (from the <code>ros2_aruco</code> package) detects ArUco markers in each frame and publishes their 3D pose in the camera frame on <code>/aruco_poses</code>.</li>
+<li><code>aruco_to_tf</code> republishes the first detected marker as a TF frame called <code>marker</code>, parented to the camera optical frame.</li>
+<li>The mission controller subscribes to <code>/aruco_poses</code> and runs a simple control law: rotate to centre the marker laterally, drive forward or back to reach the target distance, then make small rotation corrections until the marker is square to the camera.</li>
+</ol>
+<p>The robot stops once it is within <strong>3 cm laterally</strong>, <strong>2.5 cm of the target distance</strong> (30 cm by default), and <strong>5° of perpendicular</strong>. At that point the OpenManipulator-X arm has enough alignment to reliably grasp the object.</p>
+<hr />
+<h2 id="practical-setup-notes">Practical Setup Notes</h2>
+<p>Running this pipeline on the real TurtleBot 4 surfaces a few issues that don't appear in simulation. They are recorded here for anyone trying to reproduce the demo.</p>
+<h3 id="nav2-parameter-overrides">Nav2 parameter overrides</h3>
+<p>The default <code>nav2.yaml</code> shipped with <code>turtlebot4_navigation</code> uses timing parameters that are too aggressive for the iRobot Create 3's odometry-publishing cadence and clock behavior. Without the overrides below, the robot frequently aborts goals after a single spin recovery, or stops short of the target with "transform data too old" errors. The values that worked for us on <code>/opt/ros/humble/share/turtlebot4_navigation/config/nav2.yaml</code>:</p>
+<ul>
+<li><code>bt_navigator.default_server_timeout: 2000</code> (default <code>20</code> is too short — the BT aborts before the planner can acknowledge)</li>
+<li><code>bt_navigator.bt_loop_duration: 50</code> (default <code>10</code>)</li>
+<li><code>controller_server.FollowPath.transform_tolerance: 30.0</code> (default <code>0.2</code> — the Create 3 publishes <code>/odom</code> with timestamp drift that can exceed 900 ms)</li>
+<li><code>behavior_server.transform_tolerance: 30.0</code> (default <code>0.1</code>)</li>
+</ul>
+<h3 id="pre-launch-checks-on-the-real-robot">Pre-launch checks on the real robot</h3>
+<p>The Create 3 boots with its e-stop engaged, so before sending any <code>/cmd_vel</code> commands the e-stop must be cleared:
+ros2 service call /e_stop irobot_create_msgs/srv/EStop "{e_stop_on: false}"
+AMCL also needs an initial pose estimate from RViz (the <strong>2D Pose Estimate</strong> tool) before Nav2 can start — without it the localization lifecycle never reaches <code>active</code>.</p>
+<h3 id="cpu-constraint-nav2-and-aruco-do-not-run-concurrently">CPU constraint: Nav2 and ArUco do not run concurrently</h3>
+<p>The RPi 4B on board the TurtleBot 4 has four cores and roughly the throughput needed for either the full Nav2 stack <strong>or</strong> the OAK-D + <code>aruco_node</code> pipeline, but not both at once. With Nav2 active, the 1-minute CPU load average exceeds 20 (idle near 0%), and <code>aruco_node</code> is starved of its share, causing the marker detection rate to drop from a stable 30 Hz to intermittent or zero. The two capabilities are therefore demonstrated sequentially rather than as a single combined run. A platform upgrade to a Raspberry Pi 5 or Jetson Orin Nano would lift this constraint; alternatively, running ArUco detection on the OAK-D's on-board VPU would bypass the host CPU entirely.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

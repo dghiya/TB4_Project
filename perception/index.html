@@ -1,0 +1,1264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://dghiya.github.io/TB4_Project/perception/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../navigation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Perception - Object Retrival</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#perception-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Object Retrival" class="md-header__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Object Retrival
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Perception
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Perception
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../navigation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Navigation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../manipulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Manipulation
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Object Retrival" class="md-nav__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Object Retrival
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Perception
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-aruco-detection-classical-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ArUco Detection (Classical Pipeline)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. ArUco Detection (Classical Pipeline)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tf-bridge-aruco_to_tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TF Bridge: aruco_to_tf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perception-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perception Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coordinate-frame-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate Frame Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gemini-robotics-er-ai-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gemini Robotics-ER (AI Pipeline)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gemini Robotics-ER (AI Pipeline)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-vlm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a VLM?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-api-rate-limit-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The API Rate-Limit Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-one-shot-latch-chain-republish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: One-Shot Latch + Chain Republish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robustness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robustness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What It Publishes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launching_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-detect-resets-latch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-detect (resets latch)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-integration-status-and-tradeoffs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Integration Status and Tradeoffs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manipulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manipulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-aruco-detection-classical-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ArUco Detection (Classical Pipeline)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. ArUco Detection (Classical Pipeline)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tf-bridge-aruco_to_tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TF Bridge: aruco_to_tf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perception-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perception Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coordinate-frame-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate Frame Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gemini-robotics-er-ai-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gemini Robotics-ER (AI Pipeline)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gemini Robotics-ER (AI Pipeline)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-vlm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a VLM?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-api-rate-limit-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The API Rate-Limit Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-one-shot-latch-chain-republish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: One-Shot Latch + Chain Republish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robustness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robustness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What It Publishes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launching_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-detect-resets-latch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-detect (resets latch)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-integration-status-and-tradeoffs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Integration Status and Tradeoffs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="perception-architecture">Perception Architecture</h1>
+<p>The perception system provides the navigation and manipulation pipelines with the location and orientation of the target object. It publishes two outputs that the rest of the system depends on:</p>
+<ol>
+<li><strong><code>/aruco_poses</code></strong> (<code>geometry_msgs/PoseArray</code>) — consumed by the <code>MissionController</code> during the search and alignment phases.</li>
+<li><strong><code>marker</code> TF frame</strong> consumed by the <code>Pick</code> action server to plan the arm grasp.</li>
+</ol>
+<p>The current mission flow uses the <strong>ArUco</strong> pipeline for both navigation alignment and arm manupulation. A separate <strong>VLM based Gemini Robotics-ER</strong> pipeline also exists in the codebase.</p>
+<hr />
+<h2 id="1-aruco-detection-classical-pipeline">1. ArUco Detection (Classical Pipeline)</h2>
+<p>ArUco markers are square fiducial patterns from the OpenCV library. Each marker encodes a unique binary ID inside a black border. The detector finds the four corners in the image, then uses the known physical size and camera intrinsics to solve the Perspective-n-Point (PnP) problem recovering the full 6-DoF pose of the marker relative to the camera.</p>
+<h3 id="detection-pipeline">Detection Pipeline</h3>
+<p>The <code>aruco_node</code> runs on every incoming camera frame:
+1. Convert image to grayscale (<code>mono8</code>).
+2. <code>cv2.aruco.detectMarkers()</code> — adaptive thresholding, square detection, bit extraction, dictionary lookup. Returns corner pixel coordinates and marker IDs.
+3. <code>cv2.aruco.estimatePoseSingleMarkers()</code> — solves PnP using the four corner positions, known marker size, and camera intrinsics. Returns rotation vectors (<code>rvecs</code>) and translation vectors (<code>tvecs</code>).
+4. <code>cv2.Rodrigues()</code> — converts the rotation vector into a 3x3 rotation matrix.
+5. <code>tf_transformations.quaternion_from_matrix()</code> — converts the rotation matrix into a quaternion.
+6. Publishes the result as a <code>PoseArray</code> on <code>/aruco_poses</code> and as <code>ArucoMarkers</code> on <code>/aruco_markers</code>.</p>
+<h3 id="tf-bridge-aruco_to_tf">TF Bridge: <code>aruco_to_tf</code></h3>
+<p>The <code>aruco_node</code> only publishes poses on a topic. The manipulation pipelines need a <strong>TF frame</strong>. A separate bridge node (<code>aruco_to_tf</code> in <code>tb4_openx_manipulation</code>) subscribes to <code>/aruco_poses</code>, takes the first pose, and broadcasts it as:
+parent: pose header frame → child: marker
+This is what creates the <code>marker</code> frame in the TF tree. In the current workflow, the <code>aruco_to_tf</code> bridge is launched by <code>tb4_openx_manipulation/manipulation_pipeline.launch.py</code>, which creates the <code>marker</code> TF frame used downstream.</p>
+<h3 id="perception-outputs">Perception Outputs</h3>
+<p>The ArUco perception pipeline exposes two outputs for downstream subsystems:</p>
+<ol>
+<li><code>/aruco_poses</code> (<code>geometry_msgs/PoseArray</code>)</li>
+<li><code>marker</code> TF frame</li>
+</ol>
+<p>These outputs are consumed later by the navigation and manipulation modules.</p>
+<h3 id="coordinate-frame-convention">Coordinate Frame Convention</h3>
+<ul>
+<li><strong>X</strong> — right in the image</li>
+<li><strong>Y</strong> — down in the image</li>
+<li><strong>Z</strong> — forward (depth into the scene)</li>
+</ul>
+<p>The marker's Z-axis points <strong>out of the tag face</strong> (toward the camera when the robot is facing it).</p>
+<h3 id="data-flow">Data Flow</h3>
+<pre class="mermaid"><code>flowchart LR
+    CAM[OAK-D Camera] --&gt;|/oakd/rgb/preview/image_raw| AN[aruco_node]
+    CAM --&gt;|/oakd/rgb/preview/camera_info| AN
+    AN --&gt;|/aruco_poses| ATF[aruco_to_tf]
+    AN --&gt;|/aruco_poses| MC[MissionController]
+    AN --&gt;|/aruco_markers| AM[aruco_markers topic]
+    ATF --&gt;|TF: pose header frame → marker| PICK[Pick action server]
+    MC --&gt;|visual servo /cmd_vel| NAV[Robot alignment]</code></pre>
+<h3 id="configuration">Configuration</h3>
+<ul>
+<li><strong>Dictionary:</strong> <code>DICT_5X5_250</code></li>
+<li><strong>Image topic:</strong> <code>/oakd/rgb/preview/image_raw</code></li>
+<li><strong>Camera info topic:</strong> <code>/oakd/rgb/preview/camera_info</code></li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<p><strong>ROS 2:</strong> <code>rclpy</code>, <code>sensor_msgs</code>, <code>geometry_msgs</code>, <code>cv_bridge</code>, <code>tf2_ros</code>, <code>ros2_aruco_interfaces</code></p>
+<p><strong>Python:</strong> <code>opencv-python</code>, <code>numpy</code>, <code>tf_transformations</code></p>
+<h3 id="launching">Launching</h3>
+<p>The ArUco node is launched as part of the manipulation pipeline:
+<div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>tb4_openx_manipulation<span class="w"> </span>manipulation_pipeline.launch.py
+<span class="w">    </span>MC<span class="w"> </span>--&gt;<span class="p">|</span>visual<span class="w"> </span>servo<span class="w"> </span>/cmd_vel<span class="p">|</span><span class="w"> </span>NAV<span class="o">[</span>Robot<span class="w"> </span>alignment<span class="o">]</span>
+</code></pre></div></p>
+<h2 id="2-gemini-robotics-er-ai-pipeline">2. Gemini Robotics-ER (AI Pipeline)</h2>
+<p>Gemini Robotics-ER is a vision-language model from Google that can locate objects in images by text description alone. We use the <code>gemini-robotics-er-1.6-preview</code> model to detect and localize arbitrary objects in the camera frame.</p>
+<h3 id="why-a-vlm">Why a VLM?</h3>
+<p>ArUco requires a physical fiducial marker on every targetn on the other hand gemini can detect <strong>any object by description</strong> the user needs to just change a text parameter:
+<div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>ros2_gemini_er<span class="w"> </span>gemini_debug.launch.py<span class="w"> </span>target_label:<span class="o">=</span><span class="s2">&quot;red cube&quot;</span>
+ros2<span class="w"> </span>launch<span class="w"> </span>ros2_gemini_er<span class="w"> </span>gemini_debug.launch.py<span class="w"> </span>target_label:<span class="o">=</span><span class="s2">&quot;trash bag&quot;</span>
+ros2<span class="w"> </span>launch<span class="w"> </span>ros2_gemini_er<span class="w"> </span>gemini_debug.launch.py<span class="w"> </span>target_label:<span class="o">=</span><span class="s2">&quot;bottle&quot;</span>
+</code></pre></div></p>
+<h3 id="the-api-rate-limit-problem">The API Rate-Limit Problem</h3>
+<p>The free-tier Gemini Robotics-ER API is capped at <strong>5 requests per minute</strong> and <strong>20 requests per day</strong>. Continuous detection like ArUco (30 Hz) is impossible.</p>
+<h3 id="architecture-one-shot-latch-chain-republish">Architecture: One-Shot Latch + Chain Republish</h3>
+<p>Instead of calling the API continuously, we:</p>
+<ol>
+<li><strong>Detect</strong> — call Gemini with the current camera image + text prompt. The API returns normalized pixel coordinates <code>[y, x]</code> (0–1000 range) of the detected object.</li>
+<li><strong>Back-project to 3D</strong> — use the depth image and camera intrinsics (pinhole model: <code>z = depth[v,u]</code>, <code>x = (u-cx)*z/fx</code>, <code>y = (v-cy)*z/fy</code>) to convert the 2D pixel into a 3D point in the camera frame.</li>
+<li><strong>Estimate orientation</strong> — fit a plane to the depth patch around the detection using SVD (surface normal → Z-axis), then run Canny edge detection + PCA on the RGB patch for in-plane rotation recovery (dominant edge → X-axis).</li>
+<li><strong>Repeat until consensus</strong> — perform multiple API detections until <strong>3 consecutive detections agree</strong> (within 10cm in the anchor frame).</li>
+<li><strong>Latch in odom frame</strong> — once consensus is reached, compose the <code>camera→target</code> transform with <code>odom→camera</code> (from the TF tree) to get <code>odom→target</code>. Cache this. The target is static in the world, so this pose doesn't change.</li>
+<li><strong>Republish at 30 Hz</strong> — a timer reconstructs <code>camera→target</code> every 33ms by computing <code>inv(odom→camera_now) * odom→target_cached</code>. This gives a continuously updating TF as the robot moves, without any further API calls.</li>
+</ol>
+<h3 id="robustness">Robustness</h3>
+<ul>
+<li><strong>Multi-detection consensus:</strong> Requires <strong>3 consecutive agreeing detections</strong> (within 10cm in odom frame) before committing the latch.</li>
+<li><strong>MAD outlier rejection:</strong> When fitting the depth plane for orientation, pixels that deviate more than 2.5x the median absolute deviation from the median depth are rejected. This prevents background contamination when the target is small.</li>
+<li><strong>Circuit breaker:</strong> If the odom/map frame is unreachable for 5 consecutive attempts (e.g., localization not running), the node stops calling the API entirely to protect the daily quota.</li>
+</ul>
+<h3 id="what-it-publishes">What It Publishes</h3>
+<p>The Gemini pipeline currently publishes <strong>TF frames only</strong> — it does not publish to <code>/aruco_poses</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>TF Frame Published</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gemini_body_tf</code></td>
+<td><code>marker_gemini</code></td>
+</tr>
+<tr>
+<td><code>gemini_arm_tf</code></td>
+<td><code>marker_gemini_arm</code></td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>separate frames</strong> from ArUco's <code>marker</code> frame, so both pipelines can run in parallel without interfering with each other.</p>
+<h3 id="data-flow_1">Data Flow</h3>
+<pre class="mermaid"><code>flowchart LR
+    CAM[OAK-D Camera] --&gt;|"RGB + Depth + CameraInfo"| GN[gemini_body_tf_node]
+    GN --&gt;|"API calls until 3 agree"| LATCH[Latch in odom frame]
+    LATCH --&gt;|"30 Hz republish"| TF["TF: camera → marker_gemini"]
+    ACAM[Arm RealSense] --&gt;|"RGB + Depth + CameraInfo"| GA[gemini_arm_tf]
+    GA --&gt;|"API calls until 3 agree"| LATCHA[Latch in odom frame]
+    LATCHA --&gt;|"30 Hz republish"| TFA["TF: camera → marker_gemini_arm"]</code></pre>
+<h3 id="configuration_1">Configuration</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target_label</code></td>
+<td><code>artag</code></td>
+<td>Text prompt — what to detect</td>
+</tr>
+<tr>
+<td><code>model_name</code></td>
+<td><code>gemini-robotics-er-1.6-preview</code></td>
+<td>Gemini model</td>
+</tr>
+<tr>
+<td><code>confidence_threshold</code></td>
+<td><code>0.4</code></td>
+<td>Minimum confidence to accept a detection</td>
+</tr>
+<tr>
+<td><code>publish_rate_limit_hz</code></td>
+<td><code>0.025</code></td>
+<td>API call rate per node (0.025 Hz = 1 call per 40s)</td>
+</tr>
+<tr>
+<td><code>latch_in_map</code></td>
+<td><code>true</code></td>
+<td>Cache pose in anchor frame after consensus</td>
+</tr>
+<tr>
+<td><code>map_frame</code></td>
+<td><code>odom</code></td>
+<td>Anchor frame (<code>odom</code> for sim-only, <code>map</code> with Nav2)</td>
+</tr>
+<tr>
+<td><code>republish_rate_hz</code></td>
+<td><code>30.0</code></td>
+<td>Rate of cached TF republish</td>
+</tr>
+<tr>
+<td><code>min_consecutive_detections</code></td>
+<td><code>3</code></td>
+<td>Agreeing detections before latch commits</td>
+</tr>
+<tr>
+<td><code>latch_position_tolerance_m</code></td>
+<td><code>0.10</code></td>
+<td>Max spread between candidates</td>
+</tr>
+<tr>
+<td><code>max_failed_latch_attempts</code></td>
+<td><code>5</code></td>
+<td>Circuit breaker threshold</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dependencies_1">Dependencies</h3>
+<p><strong>ROS 2:</strong> <code>rclpy</code>, <code>sensor_msgs</code>, <code>geometry_msgs</code>, <code>std_msgs</code>, <code>tf2_ros</code>, <code>cv_bridge</code>, <code>message_filters</code></p>
+<p><strong>Python:</strong> <code>google-genai</code>, <code>opencv-python</code>, <code>numpy</code></p>
+<p><strong>External:</strong> Google Gemini API key (free tier: 5 RPM / 20 RPD)</p>
+<h3 id="launching_1">Launching</h3>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-key&quot;</span>
+ros2<span class="w"> </span>launch<span class="w"> </span>ros2_gemini_er<span class="w"> </span>gemini_debug.launch.py
+<span class="c1"># With Nav2 running:</span>
+ros2<span class="w"> </span>launch<span class="w"> </span>ros2_gemini_er<span class="w"> </span>gemini_debug.launch.py<span class="w"> </span>map_frame:<span class="o">=</span>map
+</code></pre></div>
+<h3 id="re-detect-resets-latch">Re-detect (resets latch)</h3>
+<div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/gemini/redetect<span class="w"> </span>std_msgs/msg/Empty
+ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/gemini/redetect_arm<span class="w"> </span>std_msgs/msg/Empty
+</code></pre></div>
+<hr />
+<h2 id="3-integration-status-and-tradeoffs">3. Integration Status and Tradeoffs</h2>
+<p>The Gemini pipeline currently runs <strong>in parallel</strong> with ArUco. It publishes its own TF frames (<code>marker_gemini</code>, <code>marker_gemini_arm</code>) alongside ArUco's <code>marker</code> frame. The navigation and manipulation code still uses ArUco exclusively the Gemini output is available for comparison and validation but is not wired into the mission controller.</p>
+<p>To make Gemini a drop-in replacement for ArUco, two things would need to happen:
+1. Rename the TF output from <code>marker_gemini</code> to <code>marker</code>.
+2. Add an adapter node that converts the TF into <code>/aruco_poses</code> PoseArray messages.</p>
+<p>We tested by spawning a red cube at <code>(2.0, 0.0, 0.3)</code> in Gazebo and Gemini returned <code>(1.92, 0.0, 0.286)</code> — roughly <strong>8cm error in x</strong> and <strong>1.4cm in z</strong>, which is reasonable given the object was far from the camera.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ArUco</th>
+<th>Gemini Robotics-ER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Detection range</strong></td>
+<td>Short (&lt; 2-3m, needs visible marker)</td>
+<td>Long (any recognizable object)</td>
+</tr>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>Sub-centimeter at close range</td>
+<td>~1-10cm depending on distance</td>
+</tr>
+<tr>
+<td><strong>Requires marker</strong></td>
+<td>Yes</td>
+<td>No (text prompt only)</td>
+</tr>
+<tr>
+<td><strong>API cost</strong></td>
+<td>None</td>
+<td>~3 calls to latch (free tier: 20/day)</td>
+</tr>
+<tr>
+<td><strong>Orientation</strong></td>
+<td>Precise (PnP from 4 corners)</td>
+<td>Estimated (depth plane fit + edge PCA)</td>
+</tr>
+<tr>
+<td><strong>Update rate</strong></td>
+<td>30 Hz native</td>
+<td>30 Hz via latch + chain republish</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For the navigation visual servoing</strong> (lateral centering, skew correction, 30cm approach), ArUco's sub-centimeter precision is currently more reliable. The alignment tolerances (<code>3cm</code> lateral, <code>2.5cm</code> distance, <code>10°</code> skew) demand accuracy that the VLM cannot yet consistently deliver at range.</p>
+<p><strong>For the pick-and-place task</strong>, the arm needs even more precise localization, which the current VLM accuracy cannot guarantee.</p>
+<p>Where Gemini performs good is in the search phase it can detect and localize an object from across the room in a single API call, potentially eliminating the need to navigate to specific zones and spin-search entirely. A hybrid approach (Gemini for long-range discovery, ArUco for close-range precision) is a natural next step.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

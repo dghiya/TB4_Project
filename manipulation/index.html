@@ -1,0 +1,1235 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://dghiya.github.io/TB4_Project/manipulation/">
+      
+      
+        <link rel="prev" href="../navigation/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Manipulation - Object Retrival</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#manipulation-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Object Retrival" class="md-header__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Object Retrival
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manipulation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../perception/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Perception
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../navigation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Navigation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Manipulation
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Object Retrival" class="md-nav__button md-logo" aria-label="Object Retrival" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Object Retrival
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manipulation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manipulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#manipulation-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manipulation Demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hardware-openmanipulator-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hardware: OpenManipulator-X
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openmanipulator-x-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenManipulator-X Specifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonomous-pick-and-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autonomous Pick and Place
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autonomous Pick and Place">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-motion-planning-moveit-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Motion Planning (MoveIt 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-pick-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Pick Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-place-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Place Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Action Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pick_object-tb4_openx_interfacesactionpick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /pick_object — tb4_openx_interfaces/action/Pick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#place_object-tb4_openx_interfacesactionplace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /place_object — tb4_openx_interfaces/action/Place
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-and-place-phase-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick and Place Phase Breakdown
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pick and Place Phase Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pick-6-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick — 6 phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#place-5-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Place — 5 phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grippercommand-bypass-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GripperCommand Bypass Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GripperCommand Bypass Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dual-srdf-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual-SRDF Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#manipulation-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manipulation Demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hardware-openmanipulator-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hardware: OpenManipulator-X
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openmanipulator-x-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenManipulator-X Specifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonomous-pick-and-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autonomous Pick and Place
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autonomous Pick and Place">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-motion-planning-moveit-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Motion Planning (MoveIt 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-pick-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Pick Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-place-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Place Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Action Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pick_object-tb4_openx_interfacesactionpick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /pick_object — tb4_openx_interfaces/action/Pick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#place_object-tb4_openx_interfacesactionplace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /place_object — tb4_openx_interfaces/action/Place
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-and-place-phase-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick and Place Phase Breakdown
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pick and Place Phase Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pick-6-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick — 6 phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#place-5-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Place — 5 phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grippercommand-bypass-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GripperCommand Bypass Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GripperCommand Bypass Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dual-srdf-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual-SRDF Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="manipulation-architecture">Manipulation Architecture</h1>
+<p>While the navigation stack handles getting the robot across the warehouse, the manipulation pipeline is responsible for the actual physical interaction with the environment—specifically, retrieving the target object.</p>
+<hr />
+<h2 id="manipulation-demonstration">Manipulation Demonstration</h2>
+<p>Watch the OpenManipulator-X execute the precise pick sequence after the visual servoing alignment is complete:</p>
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1bfqER796fDf3-FT2vA-Rr2eJQVJ2wEo3/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+</div>
+
+<!-- [![Manipulation Demo](assets/manipulation_thumbnail.png)](https://drive.google.com/file/d/1bfqER796fDf3-FT2vA-Rr2eJQVJ2wEo3/view) -->
+
+<hr />
+<h2 id="the-hardware-openmanipulator-x">The Hardware: OpenManipulator-X</h2>
+<p>For physical manipulation, we integrated the <a href="https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/">OpenManipulator-X</a> by ROBOTIS. </p>
+<p>This is a lightweight, highly capable robotic arm designed specifically for research and education. </p>
+<ul>
+<li><strong>4 Degrees of Freedom (DOF):</strong> It has four main joints (base, shoulder, elbow, and wrist), plus a parallel gripper.</li>
+<li><strong>Smart Actuators:</strong> It is powered by DYNAMIXEL smart servos, which provide high-resolution feedback on their exact joint angles and applied torque.</li>
+<li><strong>Seamless Integration:</strong> It is fully open-source and officially supported within the ROS 2 ecosystem.</li>
+</ul>
+<hr />
+<h2 id="openmanipulator-x-specifications">OpenManipulator-X Specifications</h2>
+<table>
+<thead>
+<tr>
+<th>Specification</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Degrees of Freedom</td>
+<td>4 DOF + Gripper</td>
+</tr>
+<tr>
+<td>Reach</td>
+<td>380mm</td>
+</tr>
+<tr>
+<td>Payload</td>
+<td>500g</td>
+</tr>
+<tr>
+<td>Actuators</td>
+<td>DYNAMIXEL XM430-W350</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>U2D2 (USB to Dynamixel)</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>0.7 kg</td>
+</tr>
+<tr>
+<td>Repeatability</td>
+<td>±0.2mm</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="autonomous-pick-and-place">Autonomous Pick and Place</h2>
+<p>In this pipeline, the arm acts as the physical worker. Its job is broken down into a highly coordinated sequence that only triggers once the visual servoing system has perfectly aligned the robot base with the target.</p>
+<h3 id="1-motion-planning-moveit-2">1. Motion Planning (MoveIt 2)</h3>
+<p>Before the arm physically moves, it has to "think" about how to do it safely. We use MoveIt 2, the industry standard for robotic motion planning. </p>
+<p>When the mission controller requests a "Pick," MoveIt calculates the precise joint angles required to reach the target object. Crucially, it also checks for collisions, ensuring the arm doesn't accidentally smash into the TurtleBot's camera or the floor while trying to reach the item.</p>
+<h3 id="2-the-pick-sequence">2. The Pick Sequence</h3>
+<p>Once a safe trajectory is found, the arm executes the pick sequence:</p>
+<ul>
+<li><strong>Extend:</strong> The arm reaches out to the coordinates provided by the perception system.</li>
+<li><strong>Grasp:</strong> The parallel gripper closes around the target object (identified by its ArUco marker).</li>
+<li><strong>Tuck for Transit:</strong> Instead of driving with the arm fully extended (which would shift the robot's center of gravity and cause navigation issues), the arm pulls the object back into a compact, safe "Home" position for the drive back.</li>
+</ul>
+<h3 id="3-the-place-sequence">3. The Place Sequence</h3>
+<p>After the Nav2 stack drives the robot back to the home base, the mission controller triggers the final stage. The arm smoothly extends back out, opens the gripper to drop the retrieved object, and returns to its resting state, ready for the next mission.</p>
+<hr />
+<h2 id="action-interface">Action Interface</h2>
+<p>The manipulation subsystem exposes two ROS 2 actions defined in the <code>tb4_openx_interfaces</code> package. The mission controller (or any external client) invokes these to trigger autonomous pick and place behavior.</p>
+<h3 id="pick_object-tb4_openx_interfacesactionpick"><code>/pick_object</code> — <code>tb4_openx_interfaces/action/Pick</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong> <code>marker_frame</code></td>
+<td><code>string</code></td>
+<td>TF frame name of the detected target (e.g. <code>marker</code>)</td>
+</tr>
+<tr>
+<td><strong>Feedback</strong> <code>current_phase</code></td>
+<td><code>string</code></td>
+<td>Current execution phase, see table below</td>
+</tr>
+<tr>
+<td><strong>Result</strong> <code>success</code></td>
+<td><code>bool</code></td>
+<td>True if the full sequence completed</td>
+</tr>
+<tr>
+<td><strong>Result</strong> <code>message</code></td>
+<td><code>string</code></td>
+<td>Human-readable status string</td>
+</tr>
+</tbody>
+</table>
+<h3 id="place_object-tb4_openx_interfacesactionplace"><code>/place_object</code> — <code>tb4_openx_interfaces/action/Place</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong> <code>place_pose</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>Target drop pose in <code>world</code> or <code>base_link</code> frame</td>
+</tr>
+<tr>
+<td><strong>Goal</strong> <code>retreat_height</code></td>
+<td><code>float64</code></td>
+<td>Vertical clearance after release, in meters</td>
+</tr>
+<tr>
+<td><strong>Feedback</strong> <code>current_phase</code></td>
+<td><code>string</code></td>
+<td>Current execution phase, see table below</td>
+</tr>
+<tr>
+<td><strong>Result</strong> <code>success</code></td>
+<td><code>bool</code></td>
+<td>True if the full sequence completed</td>
+</tr>
+<tr>
+<td><strong>Result</strong> <code>message</code></td>
+<td><code>string</code></td>
+<td>Human-readable status string</td>
+</tr>
+</tbody>
+</table>
+<p>The action server is implemented in <code>pick_place/src/pick_place.cpp</code>. Both actions provide real-time <code>current_phase</code> feedback so the mission controller can log progress and detect partial failures.</p>
+<hr />
+<h2 id="pick-and-place-phase-breakdown">Pick and Place Phase Breakdown</h2>
+<p>Internally, each action is decomposed into a fixed sequence of phases. The action server publishes the current phase as feedback at each transition, which is how the mission controller monitors progress.</p>
+<h3 id="pick-6-phases">Pick — 6 phases</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Phase</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>opening_gripper</code></td>
+<td>Issue GripperCommand to open position before approach</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>approaching</code></td>
+<td>MoveIt plans + executes to a pre-grasp pose above the marker</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>descending</code></td>
+<td>Linear descent to the grasp pose at the marker's height</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>closing_gripper</code></td>
+<td>Issue GripperCommand to close position around the object</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>ascending</code></td>
+<td>Lift the grasped object back to the pre-grasp height</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>returning_home</code></td>
+<td>Tuck the arm back to the compact home pose for safe driving</td>
+</tr>
+</tbody>
+</table>
+<h3 id="place-5-phases">Place — 5 phases</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Phase</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>approaching_place</code></td>
+<td>MoveIt plans + executes to a pre-place pose above the target</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>placing</code></td>
+<td>Linear descent to the place pose</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>opening_gripper</code></td>
+<td>Issue GripperCommand to release the object</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>retreating</code></td>
+<td>Ascend by <code>retreat_height</code> to clear the released object</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>returning_home</code></td>
+<td>Tuck the arm back to the compact home pose</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="grippercommand-bypass-design">GripperCommand Bypass Design</h2>
+<p>A subtle but important design decision in <code>pick_place.cpp</code> is that <strong>MoveIt is used for arm motion only — the gripper is controlled by a dedicated <code>GripperCommand</code> action client that bypasses MoveIt entirely</strong>.</p>
+<h3 id="why">Why</h3>
+<p>MoveIt's <code>simple_controller_manager</code> is supposed to honor a <code>max_effort</code> parameter from the controllers YAML when commanding the gripper. In practice, it only applies <code>max_effort</code> when the trajectory message includes an explicit <code>effort</code> field. For SRDF named-target trajectories (e.g. <code>move_to_named(gripper, "open")</code>), the trajectory generator does not populate <code>effort</code>, so the YAML-configured limit is silently ignored and the gripper drives against its mechanical stop at full torque.</p>
+<h3 id="how">How</h3>
+<p>Inside the Pick/Place action server, the gripper phases use a parallel ROS action client connected directly to the low-level <code>gripper_controller</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">auto</span><span class="w"> </span><span class="n">gripper_client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp_action</span><span class="o">::</span><span class="n">create_client</span><span class="o">&lt;</span><span class="n">control_msgs</span><span class="o">::</span><span class="n">action</span><span class="o">::</span><span class="n">GripperCommand</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gripper_controller/gripper_cmd&quot;</span><span class="p">);</span>
+
+<span class="c1">// In opening_gripper / closing_gripper phases:</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">goal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">control_msgs</span><span class="o">::</span><span class="n">action</span><span class="o">::</span><span class="n">GripperCommand</span><span class="o">::</span><span class="n">Goal</span><span class="p">();</span>
+<span class="n">goal</span><span class="p">.</span><span class="n">command</span><span class="p">.</span><span class="n">position</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GRIPPER_OPEN_POSITION</span><span class="p">;</span><span class="w">   </span><span class="c1">// or GRIPPER_CLOSE_POSITION</span>
+<span class="n">goal</span><span class="p">.</span><span class="n">command</span><span class="p">.</span><span class="n">max_effort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w">                     </span><span class="c1">// honored by hardware controller</span>
+<span class="n">gripper_client</span><span class="o">-&gt;</span><span class="n">async_send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">);</span>
+</code></pre></div>
+<p>This guarantees the <code>max_effort = 0.0</code> limit reaches the Dynamixel firmware, preventing motor jam and damage. MoveIt continues to handle all four arm joints (collision checking, IK, trajectory planning) — only the gripper is detoured.</p>
+<p>This split is what made the real-hardware Pick + Place sequence (recorded 5/8) reliably reach <code>success: true</code> without manual intervention.</p>
+<hr />
+<h2 id="dual-srdf-strategy">Dual-SRDF Strategy</h2>
+<p>The OpenManipulator-X gripper joint values are environment-dependent. The repository carries <strong>two SRDF files</strong> loaded by different launch entry points:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Used by</th>
+<th><code>open</code> value</th>
+<th><code>close</code> value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>open_manipulator_x.srdf</code></td>
+<td><code>move_group.launch.py</code> (sim)</td>
+<td><code>0.019</code></td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>open_manipulator_x_real.srdf</code></td>
+<td><code>move_group.launch.py use_sim:=false</code> (real)</td>
+<td><code>-0.030</code></td>
+<td><code>-0.025</code></td>
+</tr>
+</tbody>
+</table>
+<p>The "real" values were calibrated empirically against the specific OMX unit used in the project, whose Dynamixel ID 15 motor has a non-standard home offset in EEPROM. With standard values, that motor drives the gripper into a mechanical jam zone around joint position ≈ -0.014.</p>
+<p><code>hardware_moveit.launch.py</code> selects the real SRDF via the <code>use_sim:=false</code> argument passed to <code>move_group.launch.py</code>. The sim launch path uses the standard SRDF without modification, so Gazebo behavior remains consistent with the upstream ROBOTIS configuration.</p>
+<p>This dual-SRDF approach keeps the simulation pipeline portable while isolating hardware-specific calibration to a single file, so future users of a differently-calibrated OMX only need to override <code>open_manipulator_x_real.srdf</code> rather than touching the rest of the manipulation stack.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
