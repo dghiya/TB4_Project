@@ -50,3 +50,8 @@ qtcreator-*
 # Catkin custom files
 CATKIN_IGNORE
 .vscode/
+
+# ROS 2 build artifacts
+install/
+log/
+build/
